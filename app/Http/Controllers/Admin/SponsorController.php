@@ -15,7 +15,7 @@ class SponsorController extends Controller
     {
         return Inertia::render('admin/sponsors/index', [
             'sponsors' => Sponsor::query()
-                ->with('event')
+                ->with('event:id,uuid,title')
                 ->orderByDesc('created_at')
                 ->paginate(20),
         ]);

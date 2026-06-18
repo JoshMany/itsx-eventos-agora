@@ -68,8 +68,8 @@ Route::middleware(['auth', 'verified', 'role:Super Admin|Administrador|Coordinad
     Route::get('surveys/{survey}/results', [SurveyController::class, 'results'])->name('surveys.results');
     Route::patch('surveys/{survey}/restore', [SurveyController::class, 'restore'])->name('surveys.restore');
 
-    Route::resource('sponsors', SponsorController::class);
-    Route::resource('budgets', BudgetController::class)->except(['show']);
+    Route::resource('sponsors', SponsorController::class)->except(['create', 'edit', 'show']);
+    Route::resource('budgets', BudgetController::class)->except(['create', 'edit', 'show']);
 
     Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('reports/{type}', [ReportController::class, 'show'])->name('reports.show');
