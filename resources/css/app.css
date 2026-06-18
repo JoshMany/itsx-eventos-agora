@@ -1,0 +1,120 @@
+@import 'tailwindcss';
+@import '@heroui/styles';
+@import 'tw-animate-css';
+@import '@fontsource/geist-sans';
+@import '@fontsource/geist-mono';
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    /* ── Tipografía ── */
+    --font-sans:
+        'Geist Sans', 'Geist Sans Variable', ui-sans-serif, system-ui,
+        sans-serif;
+    --font-mono: 'Geist Mono', 'Geist Mono Variable', ui-monospace, monospace;
+
+    /* ── Radios ── */
+    --radius: 0.625rem;
+    --radius-sm: calc(0.625rem - 4px);
+    --radius-md: calc(0.625rem - 2px);
+    --radius-lg: 0.625rem;
+
+    /* ── Colores institucionales ITSX ── */
+    --color-itsx-blue: var(--itsx-blue);
+    --color-itsx-gold: var(--itsx-gold);
+    --color-institutional: var(--institutional);
+    --color-institutional-foreground: var(--institutional-foreground);
+    --color-certificate: var(--certificate);
+    --color-certificate-foreground: var(--certificate-foreground);
+}
+
+/* ==================================================================
+   TEMA CLARO — ITSX Institucional
+   ================================================================== */
+:root,
+.light,
+.default,
+[data-theme='light'],
+[data-theme='default'] {
+    --itsx-blue: #001e38;
+    --itsx-gold: #dcc355;
+
+    /* Background */
+    --background: #f8fafc;
+    --foreground: #0b1120;
+}
+
+/* ==================================================================
+   TEMA OSCURO — ITSX Institucional
+   ================================================================== */
+.dark,
+[data-theme='dark'] {
+    color-scheme: dark;
+
+    --itsx-blue: #001e38;
+    --itsx-gold: #dcc355;
+
+    --institutional: #001e38;
+    --institutional-foreground: #ffffff;
+    --certificate: #dcc355;
+    --certificate-foreground: #0a0a0a;
+
+    --background: #0b1120;
+    --foreground: #f8fafc;
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background font-sans text-foreground;
+    }
+}
+
+/* ── Animaciones ── */
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@utility animate-marquee {
+    animation: marquee 30s linear infinite;
+}
+
+@utility animate-fade-in-up {
+    animation: fade-in-up 600ms var(--ease-smooth, ease-out) both;
+}
+
+@utility animate-on-scroll {
+    @media (prefers-reduced-motion: no-preference) {
+        @apply opacity-0;
+        animation: fade-in-up 600ms var(--ease-smooth, ease-out) forwards;
+        animation-timeline: view();
+        animation-range: entry 10% entry 90%;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        @apply opacity-100;
+        animation: none;
+    }
+}
