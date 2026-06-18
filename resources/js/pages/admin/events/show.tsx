@@ -1747,34 +1747,43 @@ function SponsorsTab({ event, sponsors }: any) {
                                         <img
                                             src={s.logo_url}
                                             alt={s.name}
+                                            crossOrigin="anonymous"
+                                            referrerPolicy="no-referrer"
                                             className="h-10 w-10 rounded-lg object-contain"
+                                            onError={(e) => {
+                                                (
+                                                    e.target as HTMLImageElement
+                                                ).style.display = 'none';
+                                                (
+                                                    e.target as HTMLImageElement
+                                                ).nextElementSibling?.classList.remove(
+                                                    'hidden',
+                                                );
+                                            }}
                                         />
-                                    ) : (
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-400 dark:bg-gray-800">
-                                            <svg
-                                                width="20"
-                                                height="20"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                            >
-                                                <rect
-                                                    x="3"
-                                                    y="3"
-                                                    width="18"
-                                                    height="18"
-                                                    rx="2"
-                                                />
-                                                <circle
-                                                    cx="8.5"
-                                                    cy="8.5"
-                                                    r="1.5"
-                                                />
-                                                <path d="M21 15l-5-5L5 21" />
-                                            </svg>
-                                        </div>
-                                    )}
+                                    ) : null}
+                                    <div
+                                        className={`${s.logo_url ? 'hidden' : ''} flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-400 dark:bg-gray-800`}
+                                    >
+                                        <svg
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                        >
+                                            <rect
+                                                x="3"
+                                                y="3"
+                                                width="18"
+                                                height="18"
+                                                rx="2"
+                                            />
+                                            <circle cx="8.5" cy="8.5" r="1.5" />
+                                            <path d="M21 15l-5-5L5 21" />
+                                        </svg>
+                                    </div>
                                     <div>
                                         <p className="text-foreground text-sm font-medium">
                                             {s.name}
@@ -1995,191 +2004,195 @@ function SponsorFormModal({ eventId, sponsor, onClose }: any) {
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-            <div className="mx-4 w-full max-w-md rounded-xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-900">
-                <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4 dark:border-gray-800">
-                    <h2 className="text-sm font-semibold">
-                        {isEdit ? 'Editar patrocinador' : 'Nuevo patrocinador'}
-                    </h2>
-                    <button
-                        onClick={onClose}
-                        className="rounded p-1 text-gray-400 hover:text-gray-600"
-                    >
-                        <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                        >
-                            <line x1="18" y1="6" x2="6" y2="18" />
-                            <line x1="6" y1="6" x2="18" y2="18" />
-                        </svg>
-                    </button>
-                </div>
-                <form
-                    ref={formRef}
-                    onSubmit={handleSubmit}
-                    className="space-y-4 p-5"
-                >
-                    <div>
-                        <label className="text-xs font-medium text-gray-500">
-                            Nombre *
-                        </label>
-                        <input
-                            name="name"
-                            defaultValue={sponsor?.name ?? ''}
-                            required
-                            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
-                        />
-                    </div>
-                    <div>
-                        <label className="text-xs font-medium text-gray-500">
-                            Tipo de patrocinio *
-                        </label>
-                        <select
-                            name="sponsorship_type"
-                            defaultValue={
-                                sponsor?.sponsorship_type ?? 'financial'
-                            }
-                            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
-                        >
-                            {Object.entries(SPONSORSHIP_TYPES).map(([k, v]) => (
-                                <option key={k} value={k}>
-                                    {v}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <label className="text-xs font-medium text-gray-500">
-                            URL del logo
-                        </label>
-                        <input
-                            name="logo_url"
-                            defaultValue={sponsor?.logo_url ?? ''}
-                            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
-                        />
-                    </div>
-                    <div>
-                        <label className="text-xs font-medium text-gray-500">
-                            Sitio web
-                        </label>
-                        <input
-                            name="website"
-                            defaultValue={sponsor?.website ?? ''}
-                            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
-                        />
-                    </div>
-                    <div>
-                        <label className="text-xs font-medium text-gray-500">
-                            Valor de la aportación ($)
-                        </label>
-                        <input
-                            name="contribution_value"
-                            type="number"
-                            step="0.01"
-                            defaultValue={sponsor?.contribution_value ?? ''}
-                            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
-                        />
-                    </div>
-                    <div>
-                        <label className="text-xs font-medium text-gray-500">
-                            Descripción del aporte
-                        </label>
-                        <textarea
-                            name="contribution_description"
-                            defaultValue={
-                                sponsor?.contribution_description ?? ''
-                            }
-                            rows={3}
-                            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
-                        />
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                        <div>
-                            <label className="text-xs font-medium text-gray-500">
-                                Contacto
-                            </label>
-                            <input
-                                name="contact_name"
-                                defaultValue={sponsor?.contact_name ?? ''}
-                                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
-                            />
-                        </div>
-                        <div>
-                            <label className="text-xs font-medium text-gray-500">
-                                Email
-                            </label>
-                            <input
-                                name="contact_email"
-                                type="email"
-                                defaultValue={sponsor?.contact_email ?? ''}
-                                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label className="text-xs font-medium text-gray-500">
-                            Teléfono
-                        </label>
-                        <input
-                            name="contact_phone"
-                            defaultValue={sponsor?.contact_phone ?? ''}
-                            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
-                        />
-                    </div>
-                    {isEdit && (
-                        <div>
-                            <label className="text-xs font-medium text-gray-500">
-                                Estado
-                            </label>
-                            <select
-                                name="status"
-                                defaultValue={sponsor?.status ?? 'prospective'}
-                                className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+        <Modal>
+            <Modal.Backdrop isOpen={true} onOpenChange={() => onClose()}>
+                <Modal.Container scroll="inside" size="md">
+                    <Modal.Dialog>
+                        <Modal.Header>
+                            <Modal.Heading>
+                                {isEdit
+                                    ? 'Editar patrocinador'
+                                    : 'Nuevo patrocinador'}
+                            </Modal.Heading>
+                            <Modal.CloseTrigger />
+                        </Modal.Header>
+                        <Modal.Body>
+                            <form
+                                ref={formRef}
+                                onSubmit={handleSubmit}
+                                className="space-y-4"
                             >
-                                {Object.entries(SPONSOR_STATUS).map(
-                                    ([k, v]) => (
-                                        <option key={k} value={k}>
-                                            {v}
-                                        </option>
-                                    ),
+                                <div>
+                                    <label className="text-xs font-medium text-gray-500">
+                                        Nombre *
+                                    </label>
+                                    <input
+                                        name="name"
+                                        defaultValue={sponsor?.name ?? ''}
+                                        required
+                                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-xs font-medium text-gray-500">
+                                        Tipo de patrocinio *
+                                    </label>
+                                    <select
+                                        name="sponsorship_type"
+                                        defaultValue={
+                                            sponsor?.sponsorship_type ??
+                                            'financial'
+                                        }
+                                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+                                    >
+                                        {Object.entries(SPONSORSHIP_TYPES).map(
+                                            ([k, v]) => (
+                                                <option key={k} value={k}>
+                                                    {v}
+                                                </option>
+                                            ),
+                                        )}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-xs font-medium text-gray-500">
+                                        URL del logo
+                                    </label>
+                                    <input
+                                        name="logo_url"
+                                        defaultValue={sponsor?.logo_url ?? ''}
+                                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-xs font-medium text-gray-500">
+                                        Sitio web
+                                    </label>
+                                    <input
+                                        name="website"
+                                        defaultValue={sponsor?.website ?? ''}
+                                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-xs font-medium text-gray-500">
+                                        Valor de la aportación ($)
+                                    </label>
+                                    <input
+                                        name="contribution_value"
+                                        type="number"
+                                        step="0.01"
+                                        defaultValue={
+                                            sponsor?.contribution_value ?? ''
+                                        }
+                                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-xs font-medium text-gray-500">
+                                        Descripción del aporte
+                                    </label>
+                                    <textarea
+                                        name="contribution_description"
+                                        defaultValue={
+                                            sponsor?.contribution_description ??
+                                            ''
+                                        }
+                                        rows={3}
+                                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+                                    />
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label className="text-xs font-medium text-gray-500">
+                                            Contacto
+                                        </label>
+                                        <input
+                                            name="contact_name"
+                                            defaultValue={
+                                                sponsor?.contact_name ?? ''
+                                            }
+                                            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="text-xs font-medium text-gray-500">
+                                            Email
+                                        </label>
+                                        <input
+                                            name="contact_email"
+                                            type="email"
+                                            defaultValue={
+                                                sponsor?.contact_email ?? ''
+                                            }
+                                            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="text-xs font-medium text-gray-500">
+                                        Teléfono
+                                    </label>
+                                    <input
+                                        name="contact_phone"
+                                        defaultValue={
+                                            sponsor?.contact_phone ?? ''
+                                        }
+                                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+                                    />
+                                </div>
+                                {isEdit && (
+                                    <div>
+                                        <label className="text-xs font-medium text-gray-500">
+                                            Estado
+                                        </label>
+                                        <select
+                                            name="status"
+                                            defaultValue={
+                                                sponsor?.status ?? 'prospective'
+                                            }
+                                            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+                                        >
+                                            {Object.entries(SPONSOR_STATUS).map(
+                                                ([k, v]) => (
+                                                    <option key={k} value={k}>
+                                                        {v}
+                                                    </option>
+                                                ),
+                                            )}
+                                        </select>
+                                    </div>
                                 )}
-                            </select>
-                        </div>
-                    )}
-                    <div>
-                        <label className="text-xs font-medium text-gray-500">
-                            Notas
-                        </label>
-                        <textarea
-                            name="notes"
-                            defaultValue={sponsor?.notes ?? ''}
-                            rows={2}
-                            className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
-                        />
-                    </div>
-                    <input type="hidden" name="event_id" value={eventId} />
-                    <div className="flex items-center justify-end gap-2 border-t border-gray-100 pt-4 dark:border-gray-800">
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            className="rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700"
-                        >
-                            Cancelar
-                        </button>
-                        <button
-                            type="submit"
-                            className="rounded-lg bg-[#001e38] px-4 py-2 text-sm font-medium text-white hover:bg-[#002d54] dark:bg-[#dcc355] dark:text-[#001e38]"
-                        >
-                            {isEdit ? 'Actualizar' : 'Agregar'}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                                <div>
+                                    <label className="text-xs font-medium text-gray-500">
+                                        Notas
+                                    </label>
+                                    <textarea
+                                        name="notes"
+                                        defaultValue={sponsor?.notes ?? ''}
+                                        rows={2}
+                                        className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm dark:border-gray-600 dark:bg-gray-800"
+                                    />
+                                </div>
+                                <input
+                                    type="hidden"
+                                    name="event_id"
+                                    value={eventId}
+                                />
+                            </form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button slot="close">Cancelar</Button>
+                            <Button
+                                onPress={() => formRef.current?.requestSubmit()}
+                            >
+                                {isEdit ? 'Actualizar' : 'Agregar'}
+                            </Button>
+                        </Modal.Footer>
+                    </Modal.Dialog>
+                </Modal.Container>
+            </Modal.Backdrop>
+        </Modal>
     );
 }
 
@@ -2318,15 +2331,16 @@ function PresupuestosTab({
         budget?.approved_amount ?? budget?.planned_amount ?? 0,
     );
     const planned = parseFloat(budget?.planned_amount ?? 0);
-    const remaining = approved - totalExpenses;
-    const progressPercent = approved > 0 ? (totalExpenses / approved) * 100 : 0;
-
     const sponsorIncome =
         sponsors?.reduce(
             (sum: number, s: any) =>
                 sum + parseFloat(s.contribution_value ?? 0),
             0,
         ) ?? 0;
+    const totalBudget = approved + sponsorIncome;
+    const remaining = totalBudget - totalExpenses;
+    const progressPercent =
+        totalBudget > 0 ? (totalExpenses / totalBudget) * 100 : 0;
 
     const statusLabel = (s: string) =>
         s === 'paid' ? 'Pagado' : s === 'cancelled' ? 'Cancelado' : 'Pendiente';
@@ -2347,6 +2361,7 @@ function PresupuestosTab({
             `Presupuesto: ${event.title}`,
             `Planeado${sep}${planned.toLocaleString('es-MX')}`,
             `Aprobado${sep}${approved.toLocaleString('es-MX')}`,
+            `Ingresos${sep}${sponsorIncome.toLocaleString('es-MX')}`,
             `Gastado${sep}${totalExpenses.toLocaleString('es-MX')}`,
             `Restante${sep}${remaining.toLocaleString('es-MX')}`,
             `Ejecución${sep}${progressPercent.toFixed(1)}%`,
@@ -2401,6 +2416,7 @@ function PresupuestosTab({
             ['Concepto', 'Monto'],
             ['Planeado', planned],
             ['Aprobado', approved],
+            ['Ingresos', sponsorIncome],
             ['Gastado', totalExpenses],
             ['Restante', remaining],
             ['Ejecución', `${progressPercent.toFixed(1)}%`],
@@ -2487,6 +2503,7 @@ function PresupuestosTab({
             <div class="summary">
                 <div>Planeado<strong>$${planned.toLocaleString('es-MX')}</strong></div>
                 <div>Aprobado<strong>$${approved.toLocaleString('es-MX')}</strong></div>
+                <div>Ingresos<strong>$${sponsorIncome.toLocaleString('es-MX')}</strong></div>
                 <div>Gastado<strong>$${totalExpenses.toLocaleString('es-MX')}</strong></div>
                 <div>Restante<strong>$${remaining.toLocaleString('es-MX')}</strong></div>
                 <div>Ejecución<strong>${progressPercent.toFixed(1)}%</strong></div>
@@ -2558,7 +2575,7 @@ function PresupuestosTab({
                             {
                                 label: 'Gastado',
                                 value: totalExpenses,
-                                danger: totalExpenses > approved,
+                                danger: totalExpenses > totalBudget,
                             },
                             {
                                 label: 'Restante',
@@ -2618,11 +2635,8 @@ function PresupuestosTab({
                                     Presupuesto excedido
                                 </p>
                                 <p className="mt-0.5 text-xs text-red-600 dark:text-red-400/80">
-                                    Los gastos superan el presupuesto{' '}
-                                    {budget?.approved_amount
-                                        ? 'aprobado'
-                                        : 'planeado'}{' '}
-                                    por{' '}
+                                    Los gastos superan el presupuesto total{' '}
+                                    (aprobado + ingresos) por{' '}
                                     <strong>
                                         $
                                         {Math.abs(remaining).toLocaleString(
