@@ -1,7 +1,7 @@
 // Components
+import { Button, Spinner } from '@heroui/react';
 import { Form, Head } from '@inertiajs/react';
 import TextLink from '@/components/text-link';
-import { Button, Spinner } from '@heroui/react';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
 

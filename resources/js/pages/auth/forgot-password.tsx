@@ -1,8 +1,8 @@
 import { Form, Head, Link } from "@inertiajs/react";
+import { Mail, ArrowLeft } from "lucide-react";
 import InputError from "@/components/input-error";
 import { login } from "@/routes";
 import { email } from "@/routes/password";
-import { Mail, ArrowLeft } from "lucide-react";
 
 export default function ForgotPassword({ status }: { status?: string }) {
     return (

@@ -1,4 +1,4 @@
-import { Head, router, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { Loader2, Plus, Trash2, GripVertical } from 'lucide-react';
 import { useState } from 'react';
 
@@ -21,11 +21,12 @@ export default function SurveyForm({
     const isEdit = !!survey;
 
     const [questionsList, setQuestionsList] = useState<QuestionItem[]>(
-        questions?.map((q: any) => ({
-            ...q,
-            options: q.options ?? [],
-            _key: `q-${q.id ?? Date.now()}`,
-        })) ?? [],
+        () =>
+            questions?.map((q: any) => ({
+                ...q,
+                options: q.options ?? [],
+                _key: `q-${q.id ?? Math.random().toString(36).slice(2)}`,
+            })) ?? [],
     );
 
     const { data, setData, post, put, processing } = useForm({
@@ -40,7 +41,10 @@ export default function SurveyForm({
 
     const applyTemplate = (templateUuid: string) => {
         const tpl = templates?.find((t: any) => t.uuid === templateUuid);
-        if (!tpl) return;
+
+        if (!tpl) {
+            return;
+        }
 
         setData('title', tpl.title);
         setData('is_required', tpl.is_required);
@@ -150,6 +154,7 @@ export default function SurveyForm({
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setData('questions', questionsList);
+
         if (isEdit) {
             put(`/admin/surveys/${survey.uuid}`, { onSuccess: () => {} });
         } else {

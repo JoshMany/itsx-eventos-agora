@@ -9,7 +9,7 @@ export default function ActivityForm({
     rooms,
 }: any) {
     const isEdit = !!activity;
-    const { data, setData, post, put, processing, errors } = useForm({
+    const { data, setData, post, put, processing } = useForm({
         title: activity?.title ?? '',
         activity_type_id: activity?.activity_type_id?.toString() ?? '',
         track_id: activity?.track_id?.toString() ?? '',
@@ -23,12 +23,18 @@ export default function ActivityForm({
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const base = `/admin/events/${event.uuid}/activities`;
-        isEdit ? put(`${base}/${activity.uuid}`) : post(base);
+
+        if (isEdit) {
+            put(`${base}/${activity.uuid}`);
+        } else {
+            post(base);
+        }
     };
 
     const selectedType = activityTypes?.find(
         (t: any) => t.id.toString() === data.activity_type_id,
     );
+
     return (
         <div className="space-y-4">
             <Head title={isEdit ? 'Editar Actividad' : 'Nueva Actividad'} />

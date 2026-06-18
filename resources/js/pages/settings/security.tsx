@@ -1,3 +1,4 @@
+import { Button, Label } from '@heroui/react';
 import { Form, Head } from '@inertiajs/react';
 import { useRef } from 'react';
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
@@ -8,7 +9,6 @@ import ManagePasskeys from '@/components/manage-passkeys';
 import type { Props as ManageTwoFactorProps } from '@/components/manage-two-factor';
 import ManageTwoFactor from '@/components/manage-two-factor';
 import PasswordInput from '@/components/password-input';
-import { Button, Label } from '@heroui/react';
 import { edit } from '@/routes/security';
 
 type Props = {

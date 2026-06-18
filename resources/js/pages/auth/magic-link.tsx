@@ -1,8 +1,8 @@
 import { Form, Head, Link } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import { store } from '@/actions/App/Http/Controllers/Auth/MagicLinkController';
-import { home } from '@/routes';
 import { Mail, ArrowRight, ShieldCheck } from 'lucide-react';
+import { store } from '@/actions/App/Http/Controllers/Auth/MagicLinkController';
+import InputError from '@/components/input-error';
+import { home } from '@/routes';
 
 type Props = { status?: string };
 

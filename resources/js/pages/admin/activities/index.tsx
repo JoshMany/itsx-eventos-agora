@@ -1,13 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import {
-    Plus,
-    Calendar,
-    Clock,
-    MapPin,
-    Layers,
-    Pencil,
-    Trash2,
-} from 'lucide-react';
+import { Plus, Layers, Pencil, Trash2 } from 'lucide-react';
 
 const typeIcons: Record<string, string> = {
     conference: '🎤',
@@ -28,6 +20,7 @@ const typeIcons: Record<string, string> = {
 
 export default function ActivitiesIndex({ event, activities }: any) {
     const hasActivities = activities?.length > 0;
+
     return (
         <div className="space-y-4">
             <Head title={`Actividades - ${event?.title ?? ''}`} />
@@ -85,19 +78,19 @@ export default function ActivitiesIndex({ event, activities }: any) {
                     <table className="w-full text-sm">
                         <thead className="border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/50">
                             <tr>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">
                                     Actividad
                                 </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">
                                     Tipo
                                 </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">
                                     Eje
                                 </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">
                                     Fecha
                                 </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">
                                     Sala
                                 </th>
                                 <th className="px-4 py-3"></th>

@@ -1,9 +1,9 @@
+import { Button, Modal, Spinner } from '@heroui/react';
 import { Form } from '@inertiajs/react';
 import { Check, Copy, ScanLine } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import AlertError from '@/components/alert-error';
 import InputError from '@/components/input-error';
-import { Button, Modal, Spinner } from '@heroui/react';
 import { useAppearance } from '@/hooks/use-appearance';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
@@ -181,6 +181,7 @@ function TwoFactorVerificationStep({
                                                 const newCode = code.split('');
                                                 newCode[i] = val;
                                                 setCode(newCode.join(''));
+
                                                 if (
                                                     val &&
                                                     i < OTP_MAX_LENGTH - 1

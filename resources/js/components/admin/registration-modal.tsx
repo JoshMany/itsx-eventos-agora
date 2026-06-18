@@ -38,7 +38,7 @@ export default function RegistrationModal({
     const [selectedParticipant, setSelectedParticipant] =
         useState<ParticipantResult | null>(null);
 
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing } = useForm({
         first_name: '',
         last_name: '',
         email: '',
@@ -49,8 +49,12 @@ export default function RegistrationModal({
     });
 
     const doSearch = async () => {
-        if (!searchQuery.trim()) return;
+        if (!searchQuery.trim()) {
+            return;
+        }
+
         setSearching(true);
+
         try {
             const res = await fetch(
                 `/admin/events/${eventUuid}/registrations/search?q=${encodeURIComponent(searchQuery)}`,

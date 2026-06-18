@@ -110,7 +110,6 @@ export default function EventsIndex({ events }: any) {
 
     const meta = events?.meta;
     const totalPages = meta?.last_page ?? 1;
-    const currentPage = meta?.current_page ?? 1;
 
     return (
         <div>

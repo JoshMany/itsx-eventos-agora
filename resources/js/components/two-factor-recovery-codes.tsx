@@ -1,8 +1,8 @@
+import { Button, Card } from '@heroui/react';
 import { Form } from '@inertiajs/react';
 import { Eye, EyeOff, LockKeyhole, RefreshCw } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import AlertError from '@/components/alert-error';
-import { Button, Card } from '@heroui/react';
 import { regenerateRecoveryCodes } from '@/routes/two-factor';
 
 type Props = {

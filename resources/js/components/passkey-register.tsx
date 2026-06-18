@@ -1,7 +1,7 @@
+import { Button, Input, Label } from '@heroui/react';
 import { usePasskeyRegister } from '@laravel/passkeys/react';
 import { useState } from 'react';
 import InputError from '@/components/input-error';
-import { Button, Input, Label } from '@heroui/react';
 
 type Props = {
     onSuccess: () => void;

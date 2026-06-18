@@ -1,6 +1,6 @@
+import { Button, Modal } from '@heroui/react';
 import { KeyRound, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { Button, Modal } from '@heroui/react';
 import type { Passkey } from '@/types/auth';
 
 type Props = {

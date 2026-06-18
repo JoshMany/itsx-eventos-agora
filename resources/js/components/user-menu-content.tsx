@@ -1,6 +1,6 @@
-import { Link, router } from '@inertiajs/react';
-import { LogOut, Settings } from 'lucide-react';
 import { Dropdown, Label } from '@heroui/react';
+import { router } from '@inertiajs/react';
+import { LogOut, Settings } from 'lucide-react';
 import { UserInfo } from '@/components/user-info';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { logout } from '@/routes';

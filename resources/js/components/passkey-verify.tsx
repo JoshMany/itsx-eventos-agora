@@ -1,9 +1,9 @@
+import { Button, Separator, Spinner } from '@heroui/react';
 import type { UrlMethodPair } from '@inertiajs/core';
 import { router } from '@inertiajs/react';
 import { usePasskeyVerify } from '@laravel/passkeys/react';
 import { KeyRound } from 'lucide-react';
 import InputError from '@/components/input-error';
-import { Button, Separator, Spinner } from '@heroui/react';
 
 type Props = {
     routes?: {

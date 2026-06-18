@@ -1,10 +1,10 @@
+import { Button, Label, Modal } from '@heroui/react';
 import { Form } from '@inertiajs/react';
 import { useRef, useState } from 'react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
-import { Button, Label, Modal } from '@heroui/react';
 
 export default function DeleteUser() {
     const passwordInput = useRef<HTMLInputElement>(null);

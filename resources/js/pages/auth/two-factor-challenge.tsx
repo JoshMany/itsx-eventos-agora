@@ -1,7 +1,7 @@
+import { Button, Input } from '@heroui/react';
 import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
 import InputError from '@/components/input-error';
-import { Button, Input } from '@heroui/react';
 import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
 import { store } from '@/routes/two-factor/login';
 
@@ -99,6 +99,7 @@ export default function TwoFactorChallenge() {
                                                         setCode(
                                                             newCode.join(''),
                                                         );
+
                                                         if (
                                                             val &&
                                                             i <

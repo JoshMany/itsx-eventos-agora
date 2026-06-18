@@ -44,6 +44,7 @@ export default function SpeakerFormModal({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
         if (isEdit) {
             put(`/admin/events/${eventUuid}/speakers/${speaker!.uuid}`, {
                 preserveState: true,
@@ -61,6 +62,7 @@ export default function SpeakerFormModal({
 
     const toggleActivity = (id: number) => {
         const current = data.activity_ids;
+
         if (current.includes(id)) {
             setData(
                 'activity_ids',

@@ -1,13 +1,15 @@
-import { Link } from "@inertiajs/react";
-import { LayoutGrid } from "lucide-react";
-import AppLogo from "@/components/app-logo";
-import { NavUser } from "@/components/nav-user";
-import type { NavItem } from "@/types";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-
-const mainNavItems: NavItem[] = [
-    { title: "Dashboard", href: "/admin", icon: LayoutGrid },
-];
+import { Link } from '@inertiajs/react';
+import AppLogo from '@/components/app-logo';
+import { NavUser } from '@/components/nav-user';
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+} from '@/components/ui/sidebar';
 
 export function AppSidebar() {
     return (

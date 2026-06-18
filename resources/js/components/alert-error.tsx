@@ -1,5 +1,5 @@
-import { AlertCircleIcon } from 'lucide-react';
 import { Alert } from '@heroui/react';
+import { AlertCircleIcon } from 'lucide-react';
 
 export default function AlertError({
     errors,

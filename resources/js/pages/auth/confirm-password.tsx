@@ -1,3 +1,4 @@
+import { Button, Label, Spinner } from '@heroui/react';
 import { Form, Head } from '@inertiajs/react';
 import {
     index as confirmOptions,
@@ -6,7 +7,6 @@ import {
 import InputError from '@/components/input-error';
 import PasskeyVerify from '@/components/passkey-verify';
 import PasswordInput from '@/components/password-input';
-import { Button, Label, Spinner } from '@heroui/react';
 import { store } from '@/routes/password/confirm';
 
 export default function ConfirmPassword() {

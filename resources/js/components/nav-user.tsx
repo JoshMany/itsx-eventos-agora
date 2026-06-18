@@ -1,6 +1,6 @@
+import { Dropdown } from '@heroui/react';
 import { usePage } from '@inertiajs/react';
 import { ChevronsUpDown } from 'lucide-react';
-import { Dropdown } from '@heroui/react';
 import {
     SidebarMenu,
     SidebarMenuButton,

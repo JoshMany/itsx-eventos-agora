@@ -38,7 +38,6 @@ export default function BulkRegistrationModal({
     const [previewing, setPreviewing] = useState(false);
     const [registering, setRegistering] = useState(false);
     const [filters, setFilters] = useState<Record<string, string>>({});
-    const [registered, setRegistered] = useState(false);
 
     useEffect(() => {
         fetch(`/admin/events/${eventUuid}/registrations/filter-criterias`)
@@ -52,9 +51,13 @@ export default function BulkRegistrationModal({
     const hasFilters = Object.values(filters).some((v) => v);
 
     const doPreview = async () => {
-        if (!hasFilters) return;
+        if (!hasFilters) {
+            return;
+        }
+
         setPreviewing(true);
         setPreview(null);
+
         try {
             const res = await fetch(
                 `/admin/events/${eventUuid}/registrations/preview-filter`,
@@ -271,7 +274,9 @@ export default function BulkRegistrationModal({
                                 <div className="flex flex-wrap items-center gap-1.5 text-xs text-gray-500">
                                     <span className="font-medium">
                                         {activeFilterCount} filtro
-                                        {activeFilterCount !== 1 ? 's' : ''}{' '}
+                                        {activeFilterCount !== 1
+                                            ? 's'
+                                            : ''}{' '}
                                         activo
                                         {activeFilterCount !== 1 ? 's' : ''}:
                                     </span>

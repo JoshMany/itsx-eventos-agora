@@ -1,7 +1,7 @@
+import { Separator } from '@heroui/react';
 import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
 import Heading from '@/components/heading';
-import { Separator } from '@heroui/react';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { cn, toUrl } from '@/lib/utils';
 import { edit as editAppearance } from '@/routes/appearance';
