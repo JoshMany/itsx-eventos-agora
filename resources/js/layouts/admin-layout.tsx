@@ -1,20 +1,16 @@
 import { Avatar, Dropdown, Label, Tooltip } from '@heroui/react';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import {
     LayoutGrid,
     Calendar,
     Users,
-    ClipboardCheck,
-    CheckSquare,
     Award,
     ClipboardList,
     Handshake,
     DollarSign,
-    Bell,
     BarChart3,
     Settings,
     ChevronDown,
-    Building2,
     ChevronLeft,
     ChevronRight,
 } from 'lucide-react';
@@ -59,26 +55,11 @@ export default function AdminLayout({
                     href: '/admin/participants',
                     icon: Users,
                 },
-                {
-                    label: 'Organizaciones',
-                    href: '/admin/organizations',
-                    icon: Building2,
-                },
             ],
         },
         {
             label: 'Operaciones',
             items: [
-                {
-                    label: 'Asistentes',
-                    href: '/admin/registrations',
-                    icon: ClipboardCheck,
-                },
-                {
-                    label: 'Asistencia',
-                    href: '/admin/attendance',
-                    icon: CheckSquare,
-                },
                 {
                     label: 'Constancias',
                     href: '/admin/certificates',
@@ -109,11 +90,6 @@ export default function AdminLayout({
         {
             label: 'Sistema',
             items: [
-                {
-                    label: 'Notificaciones',
-                    href: '/admin/notifications',
-                    icon: Bell,
-                },
                 { label: 'Reportes', href: '/admin/reports', icon: BarChart3 },
                 {
                     label: 'Administracion',
@@ -124,10 +100,8 @@ export default function AdminLayout({
         },
     ];
 
-    const dropdownActions = {
-        logout: () => {
-            props;
-        },
+    const handleLogout = () => {
+        router.post('/logout');
     };
 
     return (
@@ -162,7 +136,7 @@ export default function AdminLayout({
                             {!collapsed && (
                                 <button
                                     onClick={() => toggleGroup(group.label)}
-                                    className="mb-1 flex w-full items-center gap-1 px-2 text-[10px] font-semibold tracking-widest text-gray-400 uppercase dark:text-gray-500"
+                                    className="mb-1 flex w-full items-center gap-1 px-2 text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500"
                                 >
                                     {group.label}
                                     <ChevronDown
@@ -249,7 +223,11 @@ export default function AdminLayout({
                         <Dropdown.Popover>
                             <Dropdown.Menu
                                 selectionMode="none"
-                                onAction={dropdownActions}
+                                onAction={(key) => {
+                                    if (key === 'logout') {
+                                        handleLogout();
+                                    }
+                                }}
                             >
                                 <Dropdown.Item
                                     id="logout"

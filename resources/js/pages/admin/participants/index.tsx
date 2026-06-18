@@ -1,6 +1,8 @@
 import { Head, Link } from '@inertiajs/react';
-import { Search } from 'lucide-react';
-import { useState } from 'react';
+import { Plus } from 'lucide-react';
+import { useMemo } from 'react';
+import { DataTable } from '@/components/ui/data-table';
+import type { Column } from '@/components/ui/data-table';
 
 const typeLabels: Record<string, string> = {
     student: 'Estudiante',
@@ -14,89 +16,153 @@ const typeColors: Record<string, string> = {
 };
 
 export default function ParticipantsIndex({ participants }: any) {
-    const [search, setSearch] = useState('');
+    const columns: Column<any>[] = useMemo(
+        () => [
+            {
+                key: 'name',
+                label: 'Participante',
+                sortable: true,
+                render: (p) => (
+                    <span className="flex flex-col">
+                        <Link
+                            href={`/admin/participants/${p.uuid}`}
+                            className="font-medium text-[#001e38] hover:underline dark:text-[#dcc355]"
+                        >
+                            {p.first_name} {p.last_name}
+                        </Link>
+                        {p.organization_name && (
+                            <span className="text-xs text-gray-400">
+                                {p.organization_name}
+                            </span>
+                        )}
+                    </span>
+                ),
+            },
+            {
+                key: 'type',
+                label: 'Tipo',
+                sortable: true,
+                filterable: true,
+                filterOptions: [
+                    { label: 'Estudiante', value: 'student' },
+                    { label: 'Personal', value: 'staff' },
+                    { label: 'Externo', value: 'external' },
+                ],
+                render: (p) => (
+                    <span
+                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${typeColors[p.type] ?? ''}`}
+                    >
+                        {typeLabels[p.type] ?? p.type}
+                    </span>
+                ),
+            },
+            {
+                key: 'email',
+                label: 'Email',
+                sortable: true,
+                render: (p) => <span className="text-gray-500">{p.email}</span>,
+            },
+            {
+                key: 'phone',
+                label: 'Teléfono',
+                sortable: true,
+                render: (p) => (
+                    <span className="text-gray-500">{p.phone ?? '—'}</span>
+                ),
+            },
+            {
+                key: 'created_at',
+                label: 'Registrado',
+                sortable: true,
+                render: (p) => (
+                    <span className="text-xs text-gray-500">
+                        {p.created_at
+                            ? new Date(p.created_at).toLocaleDateString('es-MX')
+                            : '—'}
+                    </span>
+                ),
+            },
+            {
+                key: 'actions',
+                label: '',
+                className: 'text-end',
+                render: (p) => (
+                    <Link
+                        href={`/admin/participants/${p.uuid}`}
+                        className="rounded p-1 text-xs text-gray-400 hover:text-gray-600"
+                    >
+                        Ver
+                    </Link>
+                ),
+            },
+        ],
+        [],
+    );
+
+    const meta = participants?.meta;
+    const totalPages = meta?.last_page ?? 1;
 
     return (
         <div>
             <Head title="Participantes" />
             <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-2 rounded-lg border bg-white px-3 py-2 dark:bg-gray-900">
-                        <Search size={16} className="text-gray-400" />
-                        <input
-                            placeholder="Buscar..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="w-64 bg-transparent text-sm outline-none"
-                        />
-                    </div>
-                    <div className="flex-1" />
-                    <span className="text-sm text-gray-400">
-                        {participants?.total ?? 0} participantes
-                    </span>
-                </div>
-                <div className="overflow-hidden rounded-xl border bg-white dark:bg-gray-900">
-                    <table className="w-full text-sm">
-                        <thead className="border-b bg-gray-50 dark:bg-gray-900/50">
-                            <tr>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                    Participante
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                    Tipo
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                    Email
-                                </th>
-                                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                    Organizacion
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y">
-                            {participants?.data
-                                ?.filter((p: any) =>
-                                    (
-                                        p.first_name +
-                                        ' ' +
-                                        p.last_name +
-                                        ' ' +
-                                        p.email
-                                    )
-                                        .toLowerCase()
-                                        .includes(search.toLowerCase()),
-                                )
-                                .map((p: any) => (
-                                    <tr
-                                        key={p.uuid}
-                                        className="hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                <DataTable
+                    columns={columns}
+                    data={participants?.data ?? []}
+                    searchPlaceholder="Buscar por nombre o email..."
+                    searchKeys={['first_name', 'last_name', 'email']}
+                    emptyMessage="No hay participantes registrados."
+                    ariaLabel="Lista de participantes"
+                    toolbar={
+                        <Link
+                            href="/admin/participants/create"
+                            className="inline-flex items-center gap-2 rounded-lg bg-[#001e38] px-4 py-2 text-sm font-medium text-white hover:bg-[#002d54]"
+                        >
+                            <Plus size={16} />
+                            Nuevo Participante
+                        </Link>
+                    }
+                />
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                    <div className="flex items-center justify-center gap-1">
+                        {meta.links.map((link: any, i: number) => {
+                            const isActive = link.active;
+                            const label =
+                                link.label === '&laquo; Anterior'
+                                    ? 'Anterior'
+                                    : link.label === '&raquo; Siguiente'
+                                      ? 'Siguiente'
+                                      : link.label;
+
+                            if (!link.url || isActive) {
+                                return (
+                                    <span
+                                        key={i}
+                                        className={`flex h-8 min-w-8 items-center justify-center rounded-lg px-2 text-xs font-medium ${
+                                            isActive
+                                                ? 'bg-[#001e38] text-white dark:bg-[#dcc355] dark:text-[#001e38]'
+                                                : 'text-gray-300'
+                                        }`}
                                     >
-                                        <td className="px-4 py-3">
-                                            <Link
-                                                href={`/admin/participants/${p.uuid}`}
-                                                className="font-medium text-[#001e38] hover:underline dark:text-[#dcc355]"
-                                            >
-                                                {p.first_name} {p.last_name}
-                                            </Link>
-                                        </td>
-                                        <td className="px-4 py-3">
-                                            <span
-                                                className={`rounded-full px-2 py-0.5 text-xs font-medium ${typeColors[p.type] ?? ''}`}
-                                            >
-                                                {typeLabels[p.type] ?? p.type}
-                                            </span>
-                                        </td>
-                                        <td className="px-4 py-3 text-gray-500">
-                                            {p.email}
-                                        </td>
-                                        <td className="px-4 py-3 text-gray-500">
-                                            {p.organization_name ?? '—'}
-                                        </td>
-                                    </tr>
-                                ))}
-                        </tbody>
-                    </table>
-                </div>
+                                        {label}
+                                    </span>
+                                );
+                            }
+
+                            return (
+                                <Link
+                                    key={i}
+                                    href={link.url}
+                                    className="flex h-8 min-w-8 items-center justify-center rounded-lg px-2 text-xs font-medium text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                >
+                                    {label}
+                                </Link>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </div>
     );
