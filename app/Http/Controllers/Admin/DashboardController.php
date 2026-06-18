@@ -11,6 +11,8 @@ class DashboardController extends Controller
 {
     public function index(): Response
     {
+        $now = now();
+
         return Inertia::render('admin/dashboard', [
             'stats' => [
                 'events' => DB::table('events')->whereIn('status', ['published'])->count(),
@@ -19,8 +21,17 @@ class DashboardController extends Controller
                 'pendingCertificates' => DB::table('certificates')->whereNull('generated_at')->count(),
                 'pendingEvents' => DB::table('events')->where('status', 'pending_review')->count(),
             ],
-            'upcomingEvents' => DB::table('events')->where('starts_at', '>', now())->where('status', 'published')->orderBy('starts_at')->limit(5)->get(['uuid', 'title', 'starts_at']),
-            'recentActivity' => DB::table('event_registrations')->orderByDesc('created_at')->limit(10)->join('participants', 'event_registrations.participant_id', '=', 'participants.id')->join('events', 'event_registrations.event_id', '=', 'events.id')->get(['participants.first_name', 'participants.last_name', 'events.title as event_title', 'event_registrations.created_at']),
+            'upcomingEvents' => DB::table('events')
+                ->where('starts_at', '>', $now)
+                ->where('status', 'published')
+                ->orderBy('starts_at')
+                ->limit(5)
+                ->get(['uuid', 'title', 'starts_at']),
+            'needsAttention' => [
+                'pending_review' => DB::table('events')->where('status', 'pending_review')->count(),
+                'pending_registrations' => DB::table('event_registrations')->where('status', 'pending')->count(),
+                'uncertified' => DB::table('certificates')->whereNull('generated_at')->count(),
+            ],
         ]);
     }
 

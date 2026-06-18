@@ -75,6 +75,7 @@ Route::middleware(['auth', 'verified', 'role:Super Admin|Administrador|Coordinad
     Route::get('reports/{type}', [ReportController::class, 'show'])->name('reports.show');
 
     Route::prefix('administration')->name('administration.')->group(function () {
+        Route::get('/', [AdministrationController::class, 'index'])->name('index');
         Route::get('users', [AdministrationController::class, 'users'])->name('users');
         Route::get('roles', [AdministrationController::class, 'roles'])->name('roles');
         Route::get('catalogs', [AdministrationController::class, 'catalogs'])->name('catalogs');
