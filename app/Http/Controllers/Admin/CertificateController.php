@@ -20,7 +20,22 @@ class CertificateController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('admin/certificates/index', ['certificates' => DB::table('certificates')->join('participants', 'certificates.participant_id', '=', 'participants.id')->join('events', 'certificates.event_id', '=', 'events.id')->select(['certificates.*', 'participants.first_name', 'participants.last_name', 'events.title as event_title'])->orderByDesc('certificates.created_at')->paginate(25)]);
+        $certificates = Certificate::query()
+            ->join('participants', 'certificates.participant_id', '=', 'participants.id')
+            ->join('events', 'certificates.event_id', '=', 'events.id')
+            ->select([
+                'certificates.id', 'certificates.uuid', 'certificates.folio',
+                'certificates.generated_at',
+                'participants.first_name', 'participants.last_name',
+                'events.title as event_title',
+            ])
+            ->orderByDesc('certificates.created_at')
+            ->paginate(25)
+            ->withQueryString();
+
+        return Inertia::render('admin/certificates/index', [
+            'certificates' => $certificates,
+        ]);
     }
 
     public function show(string $uuid): Response
