@@ -2,8 +2,10 @@ packages:
   - '.'
 
 allowBuilds:
-  puppeteer: set this to true or false
-  unrs-resolver: set this to true or false
+  puppeteer: true
+  unrs-resolver: true
+
+packageImportMethod: copy
 
 publicHoistPattern:
   - '@inertiajs/core'
