@@ -157,12 +157,16 @@ export default function AdminLayout({
                                 }
                             >
                                 {group.items.map((item) => {
+                                    const href = item.badge
+                                        ? item.href.split('?')[0]
+                                        : item.href;
                                     const active =
-                                        window.location.pathname.endsWith(
-                                            item.badge
-                                                ? item.href.split('?')[0]
-                                                : item.href,
-                                        );
+                                        href === '/admin'
+                                            ? window.location.pathname ===
+                                              '/admin'
+                                            : window.location.pathname.startsWith(
+                                                  href,
+                                              );
 
                                     return (
                                         <Link
@@ -244,13 +248,13 @@ export default function AdminLayout({
             </aside>
 
             {/* Content */}
-            <main className="flex-1 overflow-y-auto">
+            <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
                 {header && (
                     <div className="border-b border-gray-200 bg-white px-6 py-3 dark:border-gray-800 dark:bg-gray-900">
                         <h1 className="text-lg font-semibold">{header}</h1>
                     </div>
                 )}
-                <div className="p-6">{children}</div>
+                <div className="flex-1 overflow-y-auto p-6">{children}</div>
             </main>
         </div>
     );

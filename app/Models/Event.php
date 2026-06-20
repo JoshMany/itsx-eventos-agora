@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 #[Fillable([
     'title',
@@ -27,7 +29,7 @@ use Illuminate\Support\Str;
 class Event extends Model
 {
     /** @use HasFactory<EventFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory, LogsActivity, SoftDeletes;
 
     protected function casts(): array
     {
@@ -38,6 +40,7 @@ class Event extends Model
             'registration_ends_at' => 'datetime',
             'approved_at' => 'datetime',
             'published_at' => 'datetime',
+            'archived_at' => 'datetime',
         ];
     }
 
@@ -59,5 +62,14 @@ class Event extends Model
     public function registrations(): HasMany
     {
         return $this->hasMany(EventRegistration::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges()
+            ->setDescriptionForEvent(fn (string $eventName) => "Evento {$eventName}: {$this->title}");
     }
 }

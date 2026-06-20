@@ -94,6 +94,11 @@ export default function BudgetsIndex({ budgets }: any) {
     return (
         <div>
             <Head title="Presupuestos" />
+            <div className="mb-4 flex items-center gap-2 text-sm text-gray-400">
+                <span className="text-gray-600 dark:text-gray-300">
+                    Presupuestos
+                </span>
+            </div>
             <div className="space-y-4">
                 <DataTable
                     columns={columns}

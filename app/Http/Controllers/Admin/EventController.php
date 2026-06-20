@@ -16,9 +16,23 @@ class EventController extends Controller
 {
     public function index(): Response
     {
-        $events = DB::table('events')->select(['id', 'uuid', 'title', 'slug', 'status', 'starts_at', 'capacity'])->orderByDesc('starts_at')->paginate(25);
+        $archived = request('archived') === '1';
+        $query = DB::table('events')
+            ->select(['id', 'uuid', 'title', 'slug', 'status', 'starts_at', 'capacity', 'archived_at'])
+            ->orderByDesc('starts_at');
 
-        return Inertia::render('admin/events/index', ['events' => $events]);
+        if ($archived) {
+            $query->whereNotNull('archived_at');
+        } else {
+            $query->whereNull('archived_at')->whereNull('deleted_at');
+        }
+
+        $events = $query->paginate(25)->withQueryString();
+
+        return Inertia::render('admin/events/index', [
+            'events' => $events,
+            'archived' => $archived,
+        ]);
     }
 
     public function create(): Response
@@ -356,9 +370,124 @@ class EventController extends Controller
 
     public function destroy(string $uuid): RedirectResponse
     {
-        DB::table('events')->where('uuid', $uuid)->delete();
+        $event = DB::table('events')->where('uuid', $uuid)->firstOrFail();
 
-        return redirect()->route('admin.events.index')->with('success', 'Evento eliminado.');
+        // Soft delete: set deleted_at
+        DB::table('events')->where('uuid', $uuid)->update([
+            'deleted_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        activity()
+            ->event('deleted')
+            ->withProperties(['uuid' => $uuid, 'title' => $event->title])
+            ->log("Evento archivado (papelera): {$event->title}");
+
+        return redirect()->route('admin.events.index')->with('success', 'Evento enviado a la papelera.');
+    }
+
+    public function restore(string $uuid): RedirectResponse
+    {
+        $event = DB::table('events')->where('uuid', $uuid)->whereNotNull('deleted_at')->firstOrFail();
+
+        DB::table('events')->where('uuid', $uuid)->update([
+            'deleted_at' => null,
+            'updated_at' => now(),
+        ]);
+
+        activity()
+            ->event('restored')
+            ->withProperties(['uuid' => $uuid, 'title' => $event->title])
+            ->log("Evento restaurado de papelera: {$event->title}");
+
+        return back()->with('success', 'Evento restaurado.');
+    }
+
+    public function archive(string $uuid): RedirectResponse
+    {
+        $event = DB::table('events')->where('uuid', $uuid)->firstOrFail();
+
+        DB::table('events')->where('uuid', $uuid)->update([
+            'archived_at' => now(),
+            'archived_by' => auth()->id(),
+            'updated_at' => now(),
+        ]);
+
+        activity()
+            ->event('updated')
+            ->withProperties(['uuid' => $uuid, 'title' => $event->title, 'action' => 'archive'])
+            ->log("Evento archivado: {$event->title}");
+
+        return redirect()->route('admin.events.index')->with('success', 'Evento archivado.');
+    }
+
+    public function unarchive(string $uuid): RedirectResponse
+    {
+        $event = DB::table('events')->where('uuid', $uuid)->whereNotNull('archived_at')->firstOrFail();
+
+        DB::table('events')->where('uuid', $uuid)->update([
+            'archived_at' => null,
+            'archived_by' => null,
+            'updated_at' => now(),
+        ]);
+
+        activity()
+            ->event('updated')
+            ->withProperties(['uuid' => $uuid, 'title' => $event->title, 'action' => 'unarchive'])
+            ->log("Evento desarchivado: {$event->title}");
+
+        return redirect()->route('admin.events.index', ['archived' => '1'])->with('success', 'Evento desarchivado.');
+    }
+
+    public function forceDelete(string $uuid): RedirectResponse
+    {
+        $event = DB::table('events')->where('uuid', $uuid)->firstOrFail();
+
+        // Solo permitir eliminación permanente de eventos que NUNCA fueron públicos
+        $publicStatuses = ['published', 'approved', 'finished'];
+        if (in_array($event->status, $publicStatuses)) {
+            return back()->with('error', 'No se puede eliminar permanentemente un evento que fue publicado o aprobado. Usa la opción de archivar en su lugar.');
+        }
+
+        $eventTitle = $event->title;
+
+        DB::transaction(function () use ($event) {
+            $eventId = $event->id;
+
+            // Eliminar registros relacionados en orden (respetando FKs)
+            DB::table('event_expenses')->where('event_id', $eventId)->delete();
+            DB::table('event_sponsors')->where('event_id', $eventId)->delete();
+            DB::table('event_budgets')->where('event_id', $eventId)->delete();
+            DB::table('certificates')->where('event_id', $eventId)->delete();
+            DB::table('surveys')->where('event_id', $eventId)->delete();
+            DB::table('event_attendances')->where('event_id', $eventId)->delete();
+            DB::table('event_participant_roles')->where('event_id', $eventId)->delete();
+            DB::table('event_category_event')->where('event_id', $eventId)->delete();
+            DB::table('event_registrations')->where('event_id', $eventId)->delete();
+
+            // Actividades y sus relaciones
+            $activityIds = DB::table('activities')->where('event_id', $eventId)->pluck('id')->toArray();
+            if (! empty($activityIds)) {
+                DB::table('activity_speaker')->whereIn('activity_id', $activityIds)->delete();
+                DB::table('activities')->where('event_id', $eventId)->delete();
+            }
+
+            // Tracks
+            DB::table('tracks')->where('event_id', $eventId)->delete();
+
+            // Sponsors (tabla sponsors que tiene event_id)
+            DB::table('sponsors')->where('event_id', $eventId)->delete();
+
+            // Finalmente el evento
+            DB::table('events')->where('id', $eventId)->delete();
+        });
+
+        activity()
+            ->event('deleted')
+            ->withProperties(['uuid' => $uuid, 'title' => $eventTitle])
+            ->log("Evento eliminado permanentemente: {$eventTitle}");
+
+        return redirect()->route('admin.events.index')->with('success', 'Evento eliminado permanentemente.');
     }
 
     public function updateStatus(Request $request, string $uuid): RedirectResponse

@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 #[Fillable([
     'type',
@@ -25,7 +27,7 @@ use Illuminate\Support\Str;
 class Participant extends Authenticatable
 {
     /** @use HasFactory<ParticipantFactory> */
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, LogsActivity, Notifiable, SoftDeletes;
 
     /**
      * @return array<string, string>
@@ -60,5 +62,14 @@ class Participant extends Authenticatable
     public function eventRegistrations(): HasMany
     {
         return $this->hasMany(EventRegistration::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges()
+            ->setDescriptionForEvent(fn (string $eventName) => "Participante {$eventName}: {$this->fullName()}");
     }
 }

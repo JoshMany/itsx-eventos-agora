@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\AdministrationController;
 use App\Http\Controllers\Admin\AttendanceController;
+use App\Http\Controllers\Admin\AuditController;
 use App\Http\Controllers\Admin\BudgetController;
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -22,6 +23,10 @@ Route::middleware(['auth', 'verified', 'role:Super Admin|Administrador|Coordinad
     Route::resource('events', EventController::class)->except(['show'])->parameter('events', 'event');
     Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
     Route::patch('events/{event}/status', [EventController::class, 'updateStatus'])->name('events.status');
+    Route::patch('events/{event}/archive', [EventController::class, 'archive'])->name('events.archive');
+    Route::patch('events/{event}/unarchive', [EventController::class, 'unarchive'])->name('events.unarchive');
+    Route::delete('events/{event}/force', [EventController::class, 'forceDelete'])->name('events.force-delete');
+    Route::patch('events/{event}/restore', [EventController::class, 'restore'])->name('events.restore');
 
     Route::resource('participants', ParticipantController::class)->except(['show'])->parameter('participants', 'participant');
     Route::get('participants/{participant}', [ParticipantController::class, 'show'])->name('participants.show');
@@ -77,8 +82,15 @@ Route::middleware(['auth', 'verified', 'role:Super Admin|Administrador|Coordinad
     Route::prefix('administration')->name('administration.')->group(function () {
         Route::get('/', [AdministrationController::class, 'index'])->name('index');
         Route::get('users', [AdministrationController::class, 'users'])->name('users');
+        Route::get('users/{user}/edit', [AdministrationController::class, 'editUser'])->name('users.edit');
+        Route::patch('users/{user}/roles', [AdministrationController::class, 'updateUserRoles'])->name('users.roles');
         Route::get('roles', [AdministrationController::class, 'roles'])->name('roles');
+        Route::get('roles/{role}/edit', [AdministrationController::class, 'editRole'])->name('roles.edit');
+        Route::patch('roles/{role}', [AdministrationController::class, 'updateRole'])->name('roles.update');
         Route::get('catalogs', [AdministrationController::class, 'catalogs'])->name('catalogs');
-        Route::get('audit', [AdministrationController::class, 'audit'])->name('audit');
+        Route::post('catalogs', [AdministrationController::class, 'storeCatalog'])->name('catalogs.store');
+        Route::patch('catalogs', [AdministrationController::class, 'updateCatalog'])->name('catalogs.update');
+        Route::delete('catalogs', [AdministrationController::class, 'destroyCatalog'])->name('catalogs.destroy');
+        Route::get('audit', [AuditController::class, 'index'])->name('audit');
     });
 });

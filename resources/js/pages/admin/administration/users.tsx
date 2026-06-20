@@ -1,9 +1,21 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 export default function AdministrationUsers({ users }: any) {
     return (
         <div>
             <Head title="Usuarios" />
+            <div className="mb-6 flex items-center gap-2 text-sm text-gray-400">
+                <Link
+                    href="/admin/administration"
+                    className="hover:text-gray-600"
+                >
+                    Administración
+                </Link>
+                <span>/</span>
+                <span className="text-gray-600 dark:text-gray-300">
+                    Usuarios
+                </span>
+            </div>
             <div className="space-y-6">
                 <div>
                     <h2 className="text-lg font-semibold">
@@ -42,15 +54,23 @@ export default function AdministrationUsers({ users }: any) {
                                         <td className="px-4 py-3 text-gray-500">
                                             {u.email}
                                         </td>
-                                        <td className="px-4 py-3 text-xs text-gray-400">
-                                            —
+                                        <td className="px-4 py-3 text-xs text-gray-500">
+                                            {u.role_names ?? '—'}
+                                        </td>
+                                        <td className="px-4 py-3 text-right">
+                                            <Link
+                                                href={`/admin/administration/users/${u.id}/edit`}
+                                                className="rounded p-1 text-xs text-gray-400 hover:text-gray-600"
+                                            >
+                                                Editar roles
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
                                     <td
-                                        colSpan={3}
+                                        colSpan={4}
                                         className="px-4 py-8 text-center text-sm text-gray-400"
                                     >
                                         Sin usuarios registrados.
