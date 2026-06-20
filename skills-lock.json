@@ -6,6 +6,12 @@
       "sourceType": "github",
       "skillPath": "skills/heroui-react/SKILL.md",
       "computedHash": "f4a764d21a39ccc5b2076a869cf083bbfdb983e81f9deda8d75fef42c939a993"
+    },
+    "shadcn": {
+      "source": "shadcn/ui",
+      "sourceType": "github",
+      "skillPath": "skills/shadcn/SKILL.md",
+      "computedHash": "0dc0edeeaec2ae491ae506806517866a3f9bd48d04e0458feb37e0252862891f"
     }
   }
 }
