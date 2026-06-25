@@ -1,5 +1,11 @@
-import { Avatar, Button, Dropdown } from '@heroui/react';
 import { Link, usePage } from '@inertiajs/react';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+} from '@/components/ui/dropdown-menu';
 import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
 import { useState } from 'react';
 import AppLogo from '@/components/app-logo';
@@ -55,9 +61,9 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                     <div className="lg:hidden">
                         <Button
                             variant="ghost"
-                            isIconOnly
-                            className="mr-2 h-[34px] w-[34px]"
-                            onPress={() => setIsDrawerOpen(true)}
+                            size="icon"
+                            className="mr-2"
+                            onClick={() => setIsDrawerOpen(true)}
                         >
                             <Menu className="h-5 w-5" />
                         </Button>
@@ -166,8 +172,8 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                         <div className="relative flex items-center space-x-1">
                             <Button
                                 variant="ghost"
-                                isIconOnly
-                                className="group h-9 w-9 cursor-pointer"
+                                size="icon"
+                                className="group"
                             >
                                 <Search className="!size-5 opacity-80 group-hover:opacity-100" />
                             </Button>
@@ -191,31 +197,31 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                 ))}
                             </div>
                         </div>
-                        <Dropdown>
-                            <Dropdown.Trigger>
-                                <Button
-                                    variant="ghost"
-                                    className="size-10 rounded-full p-1"
-                                >
-                                    <Avatar className="size-8 overflow-hidden rounded-full">
-                                        <Avatar.Image
-                                            src={auth.user?.avatar}
-                                            alt={auth.user?.name}
-                                        />
-                                        <Avatar.Fallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                            {getInitials(auth.user?.name ?? '')}
-                                        </Avatar.Fallback>
-                                    </Avatar>
-                                </Button>
-                            </Dropdown.Trigger>
-                            <Dropdown.Popover>
-                                <Dropdown.Menu>
-                                    {auth.user && (
-                                        <UserMenuContent user={auth.user} />
-                                    )}
-                                </Dropdown.Menu>
-                            </Dropdown.Popover>
-                        </Dropdown>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger
+                                render={
+                                    <Button
+                                        variant="ghost"
+                                        className="size-10 rounded-full p-1"
+                                    />
+                                }
+                            >
+                                <Avatar className="size-8 overflow-hidden rounded-full">
+                                    <AvatarImage
+                                        src={auth.user?.avatar}
+                                        alt={auth.user?.name}
+                                    />
+                                    <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                        {getInitials(auth.user?.name ?? '')}
+                                    </AvatarFallback>
+                                </Avatar>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                {auth.user && (
+                                    <UserMenuContent user={auth.user} />
+                                )}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </div>
             </div>

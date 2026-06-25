@@ -1,6 +1,14 @@
-import { Table } from '@heroui/react';
+import {
+    Table,
+    TableHeader,
+    TableBody,
+    TableRow,
+    TableHead,
+    TableCell,
+} from '@/components/ui/table';
 import { Search, X, ArrowUpDown } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 export type SortDirection = 'ascending' | 'descending';
 
@@ -184,86 +192,85 @@ export function DataTable<T extends Record<string, any>>({
             )}
 
             {/* Table */}
-            <Table>
-                <Table.ScrollContainer>
-                    <Table.Content
-                        aria-label={ariaLabel}
-                        className="min-w-150"
-                        sortDescriptor={
-                            sortDescriptor.column
-                                ? {
-                                      column: sortDescriptor.column,
-                                      direction: sortDescriptor.direction,
-                                  }
-                                : undefined
-                        }
-                        onSortChange={(descriptor) => {
-                            if (descriptor) {
-                                setSortDescriptor({
-                                    column: descriptor.column as string,
-                                    direction: descriptor.direction as SortDirection,
-                                });
-                            }
-                        }}
-                    >
-                        <Table.Header>
+            <div className="overflow-x-auto rounded-lg border border-border">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
                             {columns.map((col) => (
-                                <Table.Column
+                                <TableHead
                                     key={col.key}
-                                    id={col.key}
-                                    allowsSorting={col.sortable}
-                                    className={col.className}
+                                    className={cn(
+                                        col.className,
+                                        col.sortable && 'cursor-pointer select-none',
+                                    )}
+                                    onClick={
+                                        col.sortable
+                                            ? () => {
+                                                  setSortDescriptor((prev) => {
+                                                      if (prev.column === col.key) {
+                                                          return {
+                                                              column: col.key,
+                                                              direction:
+                                                                  prev.direction === 'ascending'
+                                                                      ? 'descending'
+                                                                      : 'ascending',
+                                                          };
+                                                      }
+                                                      return { column: col.key, direction: 'ascending' };
+                                                  });
+                                              }
+                                            : undefined
+                                    }
                                 >
-                                    {col.sortable
-                                        ? ({ sortDirection }: any) => (
-                                              <span className="inline-flex items-center gap-1">
-                                                  {col.label}
-                                                  <ArrowUpDown size={12} className="shrink-0 text-gray-400" />
-                                              </span>
-                                          )
-                                        : col.label}
-                                </Table.Column>
+                                    <span className="inline-flex items-center gap-1">
+                                        {col.label}
+                                        {sortDescriptor.column === col.key && (
+                                            <ArrowUpDown size={12} className="shrink-0 text-muted-foreground" />
+                                        )}
+                                    </span>
+                                </TableHead>
                             ))}
-                        </Table.Header>
-                        <Table.Body>
-                            {sorted.length === 0 ? (
-                                <Table.Row>
-                                    <Table.Cell
-                                        colSpan={columns.length}
-                                        className="py-12 text-center text-sm text-gray-400"
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {sorted.length === 0 ? (
+                            <TableRow>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="py-12 text-center text-sm text-muted-foreground"
+                                >
+                                    {emptyMessage}
+                                </TableCell>
+                            </TableRow>
+                        ) : (
+                            sorted.map((item, i) => {
+                                const rowKey = item.uuid ?? item.id ?? i;
+                                return (
+                                    <TableRow
+                                        key={rowKey}
+                                        data-row-key={rowKey}
+                                        className={cn(onRowAction && 'cursor-pointer')}
+                                        onClick={
+                                            onRowAction
+                                                ? () => onRowAction(rowKey)
+                                                : undefined
+                                        }
                                     >
-                                        {emptyMessage}
-                                    </Table.Cell>
-                                </Table.Row>
-                            ) : (
-                                sorted.map((item, i) => {
-                                    const rowKey = item.uuid ?? item.id ?? i;
-                                    return (
-                                        <Table.Row
-                                            key={rowKey}
-                                            id={rowKey}
-                                            onAction={
-                                                onRowAction
-                                                    ? () => onRowAction(rowKey)
-                                                    : undefined
-                                            }
-                                        >
-                                            {columns.map((col) => (
-                                                <Table.Cell
-                                                    key={col.key}
-                                                    className={col.cellClassName}
-                                                >
-                                                    {col.render(item)}
-                                                </Table.Cell>
-                                            ))}
-                                        </Table.Row>
-                                    );
-                                })
-                            )}
-                        </Table.Body>
-                    </Table.Content>
-                </Table.ScrollContainer>
-            </Table>
+                                        {columns.map((col) => (
+                                            <TableCell
+                                                key={col.key}
+                                                className={col.cellClassName}
+                                            >
+                                                {col.render(item)}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                );
+                            })
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
 
             {/* Footer: count */}
             <div className="flex items-center justify-between text-xs text-gray-400">

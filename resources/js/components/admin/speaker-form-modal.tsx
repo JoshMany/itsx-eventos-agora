@@ -1,4 +1,7 @@
-import { Button, Input, Label, TextArea, TextField } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { useForm } from '@inertiajs/react';
 import { Loader2, X } from 'lucide-react';
 import React from 'react';
@@ -90,78 +93,81 @@ export default function SpeakerFormModal({
 
                 <form onSubmit={handleSubmit} className="space-y-4 p-5">
                     <div className="grid grid-cols-2 gap-3">
-                        <TextField
-                            className="w-full"
-                            name="first_name"
-                            isRequired
-                        >
-                            <Label>Nombre(s)</Label>
+                        <div className="grid gap-2">
+                            <Label htmlFor="first_name">Nombre(s)</Label>
                             <Input
+                                id="first_name"
                                 value={data.first_name}
                                 onChange={(e) =>
                                     setData('first_name', e.target.value)
                                 }
                                 placeholder="Ana"
+                                required
                             />
-                        </TextField>
-                        <TextField
-                            className="w-full"
-                            name="last_name"
-                            isRequired
-                        >
-                            <Label>Apellidos</Label>
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="last_name">Apellidos</Label>
                             <Input
+                                id="last_name"
                                 value={data.last_name}
                                 onChange={(e) =>
                                     setData('last_name', e.target.value)
                                 }
                                 placeholder="García"
+                                required
                             />
-                        </TextField>
+                        </div>
                     </div>
-                    <TextField className="w-full" name="email">
-                        <Label>Correo electrónico</Label>
+                    <div className="grid gap-2">
+                        <Label htmlFor="email">Correo electrónico</Label>
                         <Input
+                            id="email"
                             type="email"
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                             placeholder="ana@example.com"
                         />
-                    </TextField>
-                    <TextField className="w-full" name="phone">
-                        <Label>Teléfono</Label>
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="phone">Teléfono</Label>
                         <Input
+                            id="phone"
                             type="tel"
                             value={data.phone}
                             onChange={(e) => setData('phone', e.target.value)}
                             placeholder="228 123 4567"
                         />
-                    </TextField>
+                    </div>
                     <div className="grid grid-cols-2 gap-3">
-                        <TextField className="w-full" name="organization">
-                            <Label>Organización</Label>
+                        <div className="grid gap-2">
+                            <Label htmlFor="organization">Organización</Label>
                             <Input
+                                id="organization"
                                 value={data.organization}
                                 onChange={(e) =>
                                     setData('organization', e.target.value)
                                 }
                                 placeholder="ITSX"
                             />
-                        </TextField>
-                        <TextField className="w-full" name="position">
-                            <Label>Cargo / Especialidad</Label>
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="position">
+                                Cargo / Especialidad
+                            </Label>
                             <Input
+                                id="position"
                                 value={data.position}
                                 onChange={(e) =>
                                     setData('position', e.target.value)
                                 }
                                 placeholder="Dra. en Ciencias"
                             />
-                        </TextField>
+                        </div>
                     </div>
-                    <TextField className="w-full" name="photo_url">
-                        <Label>URL de foto</Label>
+                    <div className="grid gap-2">
+                        <Label htmlFor="photo_url">URL de foto</Label>
                         <Input
+                            id="photo_url"
                             type="url"
                             value={data.photo_url}
                             onChange={(e) =>
@@ -169,10 +175,13 @@ export default function SpeakerFormModal({
                             }
                             placeholder="https://example.com/foto.jpg"
                         />
-                    </TextField>
-                    <TextField className="w-full" name="social_links">
-                        <Label>Redes sociales / Sitio web</Label>
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="social_links">
+                            Redes sociales / Sitio web
+                        </Label>
                         <Input
+                            id="social_links"
                             type="url"
                             value={data.social_links}
                             onChange={(e) =>
@@ -180,22 +189,22 @@ export default function SpeakerFormModal({
                             }
                             placeholder="https://linkedin.com/in/ana-garcia"
                         />
-                    </TextField>
-                    <TextField className="w-full" name="bio">
-                        <Label>Biografía</Label>
-                        <TextArea
-                            aria-label="Bio"
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="bio">Biografía</Label>
+                        <Textarea
+                            id="bio"
                             value={data.bio}
                             onChange={(e) => setData('bio', e.target.value)}
                             placeholder="Breve semblanza del ponente..."
                             className="h-24"
                         />
-                    </TextField>
+                    </div>
 
                     {eventActivities.length > 0 && (
-                        <div>
+                        <div className="grid gap-2">
                             <Label>Actividades asignadas</Label>
-                            <div className="mt-1 max-h-40 space-y-1 overflow-y-auto rounded-lg border border-gray-200 p-2 dark:border-gray-700">
+                            <div className="max-h-40 space-y-1 overflow-y-auto rounded-lg border border-border p-2">
                                 {eventActivities.map((act) => (
                                     <label
                                         key={act.id}
@@ -218,15 +227,11 @@ export default function SpeakerFormModal({
                         </div>
                     )}
 
-                    <div className="flex items-center justify-end gap-2 border-t border-gray-100 pt-4 dark:border-gray-800">
-                        <Button variant="tertiary" onPress={onClose}>
+                    <div className="flex items-center justify-end gap-2 border-t pt-4">
+                        <Button variant="secondary" onClick={onClose}>
                             Cancelar
                         </Button>
-                        <Button
-                            type="submit"
-                            isDisabled={processing}
-                            variant="primary"
-                        >
+                        <Button type="submit" disabled={processing}>
                             {processing ? (
                                 <Loader2 size={14} className="animate-spin" />
                             ) : null}

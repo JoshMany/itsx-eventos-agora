@@ -1,11 +1,13 @@
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
-    Button,
-    Input,
-    Label,
-    ListBox,
     Select,
-    TextField,
-} from '@heroui/react';
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectItem,
+} from '@/components/ui/select';
 import { router, useForm } from '@inertiajs/react';
 import { Loader2, Search, UserPlus, X } from 'lucide-react';
 import React, { useState } from 'react';
@@ -173,8 +175,7 @@ export default function RegistrationModal({
                                             )}
                                         </div>
                                         <Button
-                                            variant="primary"
-                                            onPress={() =>
+                                            onClick={() =>
                                                 registerExisting(
                                                     selectedParticipant,
                                                 )
@@ -224,13 +225,12 @@ export default function RegistrationModal({
                     ) : (
                         <form onSubmit={registerNew} className="space-y-4">
                             <div className="grid grid-cols-2 gap-3">
-                                <TextField
-                                    className="w-full"
-                                    name="first_name"
-                                    isRequired
-                                >
-                                    <Label>Nombre(s)</Label>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="first_name">
+                                        Nombre(s)
+                                    </Label>
                                     <Input
+                                        id="first_name"
                                         value={data.first_name}
                                         onChange={(e) =>
                                             setData(
@@ -239,94 +239,81 @@ export default function RegistrationModal({
                                             )
                                         }
                                         placeholder="Juan"
+                                        required
                                     />
-                                </TextField>
-                                <TextField
-                                    className="w-full"
-                                    name="last_name"
-                                    isRequired
-                                >
-                                    <Label>Apellidos</Label>
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="last_name">Apellidos</Label>
                                     <Input
+                                        id="last_name"
                                         value={data.last_name}
                                         onChange={(e) =>
                                             setData('last_name', e.target.value)
                                         }
                                         placeholder="Pérez"
+                                        required
                                     />
-                                </TextField>
+                                </div>
                             </div>
-                            <TextField
-                                className="w-full"
-                                name="email"
-                                isRequired
-                            >
-                                <Label>Correo electrónico</Label>
+                            <div className="grid gap-2">
+                                <Label htmlFor="email">
+                                    Correo electrónico
+                                </Label>
                                 <Input
+                                    id="email"
                                     type="email"
                                     value={data.email}
                                     onChange={(e) =>
                                         setData('email', e.target.value)
                                     }
                                     placeholder="juan@example.com"
+                                    required
                                 />
-                            </TextField>
-                            <Select
-                                selectedKey={data.type}
-                                onSelectionChange={(key) =>
-                                    setData('type', key as string)
-                                }
-                                className="w-full"
-                                placeholder="Seleccionar..."
-                            >
-                                <Label>Tipo</Label>
-                                <Select.Trigger>
-                                    <Select.Value />
-                                    <Select.Indicator />
-                                </Select.Trigger>
-                                <Select.Popover>
-                                    <ListBox>
-                                        <ListBox.Item
-                                            id="student"
-                                            textValue="Estudiante"
-                                        >
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="type">
+                                    Tipo de participante
+                                </Label>
+                                <Select
+                                    value={data.type}
+                                    onValueChange={(key) =>
+                                        setData('type', key ?? 'student')
+                                    }
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Seleccionar..." />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="student">
                                             Estudiante
-                                            <ListBox.ItemIndicator />
-                                        </ListBox.Item>
-                                        <ListBox.Item
-                                            id="staff"
-                                            textValue="Personal"
-                                        >
+                                        </SelectItem>
+                                        <SelectItem value="staff">
                                             Personal
-                                            <ListBox.ItemIndicator />
-                                        </ListBox.Item>
-                                        <ListBox.Item
-                                            id="external"
-                                            textValue="Externo"
-                                        >
+                                        </SelectItem>
+                                        <SelectItem value="external">
                                             Externo
-                                            <ListBox.ItemIndicator />
-                                        </ListBox.Item>
-                                    </ListBox>
-                                </Select.Popover>
-                            </Select>
+                                        </SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
                             <div className="grid grid-cols-2 gap-3">
-                                <TextField className="w-full" name="phone">
-                                    <Label>Teléfono</Label>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="phone">Teléfono</Label>
                                     <Input
+                                        id="phone"
                                         value={data.phone}
                                         onChange={(e) =>
                                             setData('phone', e.target.value)
                                         }
                                         placeholder="2281234567"
                                     />
-                                </TextField>
-                                <TextField
-                                    className="w-full"
-                                    name="student_number"
-                                >
-                                    <Label>Matrícula</Label>
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="student_number">
+                                        Matrícula
+                                    </Label>
                                     <Input
+                                        id="student_number"
                                         value={data.student_number}
                                         onChange={(e) =>
                                             setData(
@@ -336,14 +323,14 @@ export default function RegistrationModal({
                                         }
                                         placeholder="ZS21000001"
                                     />
-                                </TextField>
+                                </div>
                             </div>
-                            <TextField
-                                className="w-full"
-                                name="organization_name"
-                            >
-                                <Label>Institución / Organización</Label>
+                            <div className="grid gap-2">
+                                <Label htmlFor="organization_name">
+                                    Institución / Organización
+                                </Label>
                                 <Input
+                                    id="organization_name"
                                     value={data.organization_name}
                                     onChange={(e) =>
                                         setData(
@@ -353,17 +340,13 @@ export default function RegistrationModal({
                                     }
                                     placeholder="ITSX"
                                 />
-                            </TextField>
+                            </div>
 
-                            <div className="flex items-center justify-end gap-2 border-t border-gray-100 pt-4 dark:border-gray-800">
-                                <Button variant="tertiary" onPress={onClose}>
+                            <div className="flex items-center justify-end gap-2 border-t pt-4">
+                                <Button variant="secondary" onClick={onClose}>
                                     Cancelar
                                 </Button>
-                                <Button
-                                    type="submit"
-                                    isDisabled={processing}
-                                    variant="primary"
-                                >
+                                <Button type="submit" disabled={processing}>
                                     {processing ? (
                                         <Loader2
                                             size={14}

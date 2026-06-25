@@ -1,4 +1,11 @@
-import { Button, Card } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardContent,
+} from '@/components/ui/card';
 import { Form } from '@inertiajs/react';
 import { Eye, EyeOff, LockKeyhole, RefreshCw } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -47,20 +54,20 @@ export default function TwoFactorRecoveryCodes({
 
     return (
         <Card>
-            <Card.Header>
-                <Card.Title className="flex gap-3">
+            <CardHeader>
+                <CardTitle className="flex gap-3">
                     <LockKeyhole className="size-4" aria-hidden="true" />
                     2FA recovery codes
-                </Card.Title>
-                <Card.Description>
+                </CardTitle>
+                <CardDescription>
                     Recovery codes let you regain access if you lose your 2FA
                     device. Store them in a secure password manager.
-                </Card.Description>
-            </Card.Header>
-            <Card.Content>
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
                 <div className="flex flex-col gap-3 select-none sm:flex-row sm:items-center sm:justify-between">
                     <Button
-                        onPress={toggleCodesVisibility}
+                        onClick={toggleCodesVisibility}
                         className="w-fit"
                         aria-expanded={codesAreVisible}
                         aria-controls="recovery-codes-section"
@@ -82,7 +89,7 @@ export default function TwoFactorRecoveryCodes({
                                 <Button
                                     variant="secondary"
                                     type="submit"
-                                    isDisabled={processing}
+                                    disabled={processing}
                                     aria-describedby="regenerate-warning"
                                 >
                                     <RefreshCw /> Regenerate codes
@@ -151,7 +158,7 @@ export default function TwoFactorRecoveryCodes({
                         )}
                     </div>
                 </div>
-            </Card.Content>
+            </CardContent>
         </Card>
     );
 }

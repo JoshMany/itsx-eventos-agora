@@ -1,4 +1,4 @@
-import { Button } from '@heroui/react';
+import { Button } from '@/components/ui/button';
 import { Link, router } from '@inertiajs/react';
 import { X } from 'lucide-react';
 import { useEffect } from 'react';
@@ -47,7 +47,7 @@ export function MobileDrawer({ open, onClose, auth }: Props) {
                 } `}
             >
                 <div className="flex h-16 items-center justify-end border-b px-4">
-                    <Button isIconOnly variant="ghost" onPress={onClose}>
+                    <Button variant="ghost" size="icon" onClick={onClose}>
                         <X size={18} />
                     </Button>
                 </div>
@@ -70,7 +70,7 @@ export function MobileDrawer({ open, onClose, auth }: Props) {
                         <div className="flex flex-col gap-2">
                             <Button
                                 variant="ghost"
-                                onPress={() => {
+                                onClick={() => {
                                     onClose();
                                     router.visit(login().url);
                                 }}
@@ -80,7 +80,7 @@ export function MobileDrawer({ open, onClose, auth }: Props) {
 
                             <Button
                                 variant="ghost"
-                                onPress={() => {
+                                onClick={() => {
                                     onClose();
                                     router.visit(register().url);
                                 }}

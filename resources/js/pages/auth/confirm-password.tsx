@@ -1,4 +1,6 @@
-import { Button, Label, Spinner } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Spinner } from '@/components/ui/spinner';
 import { Form, Head } from '@inertiajs/react';
 import {
     index as confirmOptions,
@@ -43,7 +45,7 @@ export default function ConfirmPassword() {
                         <div className="flex items-center">
                             <Button
                                 className="w-full"
-                                isDisabled={processing}
+                                disabled={processing}
                                 data-test="confirm-password-button"
                             >
                                 {processing && <Spinner />}

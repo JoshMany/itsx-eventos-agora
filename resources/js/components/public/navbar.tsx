@@ -1,5 +1,5 @@
-import { Button, Link as LinkComponent } from '@heroui/react';
 import { Link, router, usePage } from '@inertiajs/react';
+import { Button } from '@/components/ui/button';
 import { Landmark, Menu, Moon, Sun } from 'lucide-react';
 import { useState } from 'react';
 
@@ -49,17 +49,21 @@ export default function NavBar() {
 
                     <nav className="hidden items-center gap-6 md:flex">
                         {navLinks.map(({ href, label }) => (
-                            <LinkComponent key={href} href={href}>
+                            <Link
+                                key={href}
+                                href={href}
+                                className="text-sm font-medium text-foreground/80 hover:text-foreground"
+                            >
                                 {label}
-                            </LinkComponent>
+                            </Link>
                         ))}
                     </nav>
 
                     <div className="hidden items-center gap-2 md:flex">
                         <Button
-                            isIconOnly
+                            size="icon"
                             variant="ghost"
-                            onPress={() =>
+                            onClick={() =>
                                 updateAppearance(isDark ? 'light' : 'dark')
                             }
                         >
@@ -70,30 +74,33 @@ export default function NavBar() {
                             <>
                                 <Button
                                     variant="ghost"
-                                    onPress={() => router.visit(login().url)}
+                                    onClick={() => router.visit(login().url)}
                                 >
                                     Iniciar sesión
                                 </Button>
 
                                 <Button
                                     variant="outline"
-                                    onPress={() => router.visit(register().url)}
+                                    onClick={() => router.visit(register().url)}
                                 >
                                     Registrate
                                 </Button>
                             </>
                         ) : (
-                            <LinkComponent href="/dashboard">
+                            <Link
+                                href="/dashboard"
+                                className="text-sm font-medium text-foreground/80 hover:text-foreground"
+                            >
                                 Mi cuenta
-                            </LinkComponent>
+                            </Link>
                         )}
                     </div>
 
                     <div className="flex items-center gap-2 md:hidden">
                         <Button
-                            isIconOnly
+                            size="icon"
                             variant="ghost"
-                            onPress={() =>
+                            onClick={() =>
                                 updateAppearance(isDark ? 'light' : 'dark')
                             }
                         >
@@ -101,9 +108,9 @@ export default function NavBar() {
                         </Button>
 
                         <Button
-                            isIconOnly
+                            size="icon"
                             variant="ghost"
-                            onPress={() => setMobileOpen(true)}
+                            onClick={() => setMobileOpen(true)}
                         >
                             <Menu size={18} />
                         </Button>

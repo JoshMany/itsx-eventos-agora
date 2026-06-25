@@ -1,12 +1,14 @@
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
-    Button,
-    Input,
-    Label,
-    ListBox,
     Select,
-    TextArea,
-    TextField,
-} from '@heroui/react';
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectItem,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { Plus, Save, Trash2, GripVertical } from 'lucide-react';
 
@@ -155,107 +157,99 @@ export default function EventForm({
                 onSubmit={handleSubmit}
                 className="mx-auto max-w-3xl space-y-6"
             >
-                <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+                <div className="rounded-xl border border-border bg-card p-6">
                     <h2 className="mb-4 text-sm font-semibold">
                         Informacion Basica
                     </h2>
                     <div className="grid gap-4">
-                        <TextField className="w-full" name="title" isRequired>
-                            <Label>Titulo</Label>
+                        <div className="grid gap-2">
+                            <Label htmlFor="title">Titulo</Label>
                             <Input
+                                id="title"
                                 value={data.title}
                                 onChange={(e) =>
                                     setData('title', e.target.value)
                                 }
                                 placeholder="Nombre del evento"
+                                required
                             />
-                        </TextField>
+                        </div>
                         <div className="grid grid-cols-2 gap-4">
-                            <TextField
-                                className="w-full"
-                                name="starts_at"
-                                isRequired
-                            >
-                                <Label>Inicio</Label>
+                            <div className="grid gap-2">
+                                <Label htmlFor="starts_at">Inicio</Label>
                                 <Input
+                                    id="starts_at"
                                     type="datetime-local"
                                     value={data.starts_at}
                                     onChange={(e) =>
                                         setData('starts_at', e.target.value)
                                     }
+                                    required
                                 />
-                            </TextField>
-                            <TextField className="w-full" name="ends_at">
-                                <Label>Fin</Label>
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="ends_at">Fin</Label>
                                 <Input
+                                    id="ends_at"
                                     type="datetime-local"
                                     value={data.ends_at}
                                     onChange={(e) =>
                                         setData('ends_at', e.target.value)
                                     }
                                 />
-                            </TextField>
+                            </div>
                         </div>
                         <div className="grid grid-cols-3 gap-4">
-                            <Select
-                                selectedKey={data.status}
-                                onSelectionChange={(key) =>
-                                    setData('status', key as string)
-                                }
-                                className="w-full"
-                                placeholder="Seleccionar..."
-                            >
-                                <Label>Estado</Label>
-                                <Select.Trigger>
-                                    <Select.Value />
-                                    <Select.Indicator />
-                                </Select.Trigger>
-                                <Select.Popover>
-                                    <ListBox>
+                            <div className="grid gap-2">
+                                <Label htmlFor="status">Estado</Label>
+                                <Select
+                                    value={data.status}
+                                    onValueChange={(key) =>
+                                        setData('status', key ?? 'draft')
+                                    }
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Seleccionar..." />
+                                    </SelectTrigger>
+                                    <SelectContent>
                                         {STATUSES.map((s) => (
-                                            <ListBox.Item
+                                            <SelectItem
                                                 key={s.value}
-                                                id={s.value}
-                                                textValue={s.label}
+                                                value={s.value}
                                             >
                                                 {s.label}
-                                                <ListBox.ItemIndicator />
-                                            </ListBox.Item>
+                                            </SelectItem>
                                         ))}
-                                    </ListBox>
-                                </Select.Popover>
-                            </Select>
-                            <Select
-                                selectedKey={data.venue_id}
-                                onSelectionChange={(key) =>
-                                    setData('venue_id', key as string)
-                                }
-                                className="w-full"
-                                placeholder="Seleccionar..."
-                            >
-                                <Label>Sede</Label>
-                                <Select.Trigger>
-                                    <Select.Value />
-                                    <Select.Indicator />
-                                </Select.Trigger>
-                                <Select.Popover>
-                                    <ListBox>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="venue_id">Sede</Label>
+                                <Select
+                                    value={data.venue_id}
+                                    onValueChange={(key) =>
+                                        setData('venue_id', key ?? '')
+                                    }
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Seleccionar..." />
+                                    </SelectTrigger>
+                                    <SelectContent>
                                         {venues?.map((v) => (
-                                            <ListBox.Item
+                                            <SelectItem
                                                 key={v.id}
-                                                id={String(v.id)}
-                                                textValue={v.name}
+                                                value={String(v.id)}
                                             >
                                                 {v.name}
-                                                <ListBox.ItemIndicator />
-                                            </ListBox.Item>
+                                            </SelectItem>
                                         ))}
-                                    </ListBox>
-                                </Select.Popover>
-                            </Select>
-                            <TextField className="w-full" name="capacity">
-                                <Label>Capacidad</Label>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="capacity">Capacidad</Label>
                                 <Input
+                                    id="capacity"
                                     type="number"
                                     value={data.capacity}
                                     onChange={(e) =>
@@ -263,15 +257,18 @@ export default function EventForm({
                                     }
                                     placeholder="Ilimitada"
                                 />
-                            </TextField>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+                <div className="rounded-xl border border-border bg-card p-6">
                     <h2 className="mb-4 text-sm font-semibold">Descripcion</h2>
-                    <TextField className="w-full" name="short_description">
-                        <TextArea
-                            aria-label="Descripcion corta"
+                    <div className="grid gap-2">
+                        <Label htmlFor="short_description">
+                            Descripcion corta
+                        </Label>
+                        <Textarea
+                            id="short_description"
                             value={data.short_description}
                             onChange={(e) =>
                                 setData('short_description', e.target.value)
@@ -280,10 +277,13 @@ export default function EventForm({
                             className="h-20"
                             maxLength={500}
                         />
-                    </TextField>
-                    <TextField className="mt-3 w-full" name="description">
-                        <TextArea
-                            aria-label="Descripcion completa"
+                    </div>
+                    <div className="mt-3 grid gap-2">
+                        <Label htmlFor="description">
+                            Descripcion completa
+                        </Label>
+                        <Textarea
+                            id="description"
                             value={data.description}
                             onChange={(e) =>
                                 setData('description', e.target.value)
@@ -291,7 +291,7 @@ export default function EventForm({
                             placeholder="Descripcion completa"
                             className="h-32"
                         />
-                    </TextField>
+                    </div>
                 </div>
 
                 {/* Ejes Tematicos */}
@@ -400,19 +400,15 @@ export default function EventForm({
                     )}
                 </div>
 
-                <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-6 py-4 dark:border-gray-800 dark:bg-gray-900">
+                <div className="flex items-center justify-between rounded-xl border border-border bg-card px-6 py-4">
                     <Button
-                        variant="tertiary"
-                        onPress={() => setData('status', 'draft')}
+                        variant="outline"
+                        onClick={() => setData('status', 'draft')}
                     >
                         Guardar Borrador
                     </Button>
                     <div className="flex gap-2">
-                        <Button
-                            type="submit"
-                            isDisabled={processing}
-                            variant="primary"
-                        >
+                        <Button type="submit" disabled={processing}>
                             <Save size={16} />
                             {isEdit ? 'Actualizar' : 'Crear Evento'}
                         </Button>

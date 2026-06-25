@@ -1,4 +1,5 @@
-import { Button, Label } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import { Form, Head } from '@inertiajs/react';
 import { useRef } from 'react';
 import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
@@ -111,7 +112,7 @@ export default function Security(props: Props) {
 
                             <div className="flex items-center gap-4">
                                 <Button
-                                    isDisabled={processing}
+                                    disabled={processing}
                                     data-test="update-password-button"
                                 >
                                     Save

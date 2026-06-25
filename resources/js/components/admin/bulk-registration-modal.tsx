@@ -1,4 +1,4 @@
-import { Button } from '@heroui/react';
+import { Button } from '@/components/ui/button';
 import { router } from '@inertiajs/react';
 import { Loader2, Users, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
@@ -396,17 +396,16 @@ export default function BulkRegistrationModal({
 
                                     <div className="flex justify-end gap-2">
                                         <Button
-                                            variant="tertiary"
-                                            onPress={onClose}
+                                            variant="secondary"
+                                            onClick={onClose}
                                         >
                                             Cancelar
                                         </Button>
                                         <Button
-                                            variant="primary"
-                                            isDisabled={
+                                            disabled={
                                                 preview.new === 0 || registering
                                             }
-                                            onPress={doBulkRegister}
+                                            onClick={doBulkRegister}
                                         >
                                             {registering ? (
                                                 <Loader2

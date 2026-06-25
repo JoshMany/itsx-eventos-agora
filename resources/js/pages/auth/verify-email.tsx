@@ -1,5 +1,6 @@
 // Components
-import { Button, Spinner } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { Form, Head } from '@inertiajs/react';
 import TextLink from '@/components/text-link';
 import { logout } from '@/routes';
@@ -20,7 +21,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
             <Form {...send.form()} className="space-y-6 text-center">
                 {({ processing }) => (
                     <>
-                        <Button isDisabled={processing} variant="secondary">
+                        <Button disabled={processing} variant="secondary">
                             {processing && <Spinner />}
                             Resend verification email
                         </Button>

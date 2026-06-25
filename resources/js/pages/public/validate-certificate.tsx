@@ -1,10 +1,12 @@
-import { Button, Card, Input } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { router, usePage } from '@inertiajs/react';
 import { Search, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
 
 export default function ValidateCertificate() {
-    const { folio } = usePage().props;
+    const { folio } = usePage<{ folio?: string }>().props;
     const [searchFolio, setSearchFolio] = useState(folio ?? '');
 
     return (
@@ -34,7 +36,7 @@ export default function ValidateCertificate() {
                             aria-label="Folio de constancia"
                         />
                         <Button
-                            onPress={() =>
+                            onClick={() =>
                                 router.get(
                                     `/constancias/validar/${searchFolio}`,
                                 )

@@ -1,5 +1,4 @@
-import { Avatar, Dropdown, Label, Tooltip } from '@heroui/react';
-import { Link, router, usePage } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import {
     LayoutGrid,
     Calendar,
@@ -13,10 +12,25 @@ import {
     ChevronDown,
     ChevronLeft,
     ChevronRight,
+    Landmark,
 } from 'lucide-react';
 import { useState } from 'react';
-import AppLogoIcon from '@/components/app-logo-icon';
 import { home } from '@/routes';
+import {
+    SidebarInset,
+    SidebarProvider,
+    SidebarTrigger,
+} from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/app-sidebar';
+import { Separator } from '@/components/ui/separator';
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
 type NavGroup = {
     label: string;
@@ -105,30 +119,32 @@ export default function AdminLayout({
     };
 
     return (
-        <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-950">
+        <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-990">
             {/* Sidebar */}
-            <aside
+            {/* <aside
                 className={`flex flex-col border-r border-gray-200 bg-white transition-all duration-200 dark:border-gray-800 dark:bg-gray-900 ${collapsed ? 'w-16' : 'w-60'}`}
             >
                 <div className="flex h-14 items-center gap-3 border-b border-gray-200 px-3 dark:border-gray-800">
                     <Link href={home()} className="flex items-center gap-2">
-                        <AppLogoIcon className="size-7 shrink-0 fill-[#001e38] dark:fill-[#dcc355]" />
+                        <Landmark className="size-7 shrink-0 fill-[#001e38] dark:fill-[#dcc355]" />
                         {!collapsed && (
                             <span className="text-sm font-semibold text-[#001e38] dark:text-[#dcc355]">
                                 AGORA
                             </span>
                         )}
                     </Link>
-                    <button
+                    <Button
                         onClick={() => setCollapsed(!collapsed)}
-                        className="ml-auto rounded-md p-1 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        variant="default"
+                        size="icon"
+                        className={`z-10 m-0 p-0`}
                     >
                         {collapsed ? (
                             <ChevronRight size={16} />
                         ) : (
                             <ChevronLeft size={16} />
                         )}
-                    </button>
+                    </Button>
                 </div>
                 <nav className="flex-1 space-y-4 overflow-y-auto px-2 py-3">
                     {navGroups.map((group) => (
@@ -136,7 +152,7 @@ export default function AdminLayout({
                             {!collapsed && (
                                 <button
                                     onClick={() => toggleGroup(group.label)}
-                                    className="mb-1 flex w-full items-center gap-1 px-2 text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500"
+                                    className="mb-1 flex w-full items-center gap-1 px-2 text-[10px] font-semibold tracking-widest text-gray-400 uppercase dark:text-gray-500"
                                 >
                                     {group.label}
                                     <ChevronDown
@@ -245,17 +261,50 @@ export default function AdminLayout({
                         </Dropdown.Popover>
                     </Dropdown>
                 </div>
-            </aside>
+            </aside> */}
 
             {/* Content */}
-            <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
+            {/* <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
                 {header && (
                     <div className="border-b border-gray-200 bg-white px-6 py-3 dark:border-gray-800 dark:bg-gray-900">
                         <h1 className="text-lg font-semibold">{header}</h1>
                     </div>
                 )}
                 <div className="flex-1 overflow-y-auto p-6">{children}</div>
-            </main>
+            </main> */}
+
+            <SidebarProvider>
+                <AppSidebar />
+                <SidebarInset>
+                    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+                        <div className="flex items-center gap-2 px-4">
+                            <SidebarTrigger className="-ml-1" />
+                            <Separator
+                                orientation="vertical"
+                                className="mr-2 data-[orientation=vertical]:h-4"
+                            />
+                            <Breadcrumb>
+                                <BreadcrumbList>
+                                    <BreadcrumbItem className="hidden md:block">
+                                        <BreadcrumbLink href="#">
+                                            Build Your Application
+                                        </BreadcrumbLink>
+                                    </BreadcrumbItem>
+                                    <BreadcrumbSeparator className="hidden md:block" />
+                                    <BreadcrumbItem>
+                                        <BreadcrumbPage>
+                                            Data Fetching
+                                        </BreadcrumbPage>
+                                    </BreadcrumbItem>
+                                </BreadcrumbList>
+                            </Breadcrumb>
+                        </div>
+                    </header>
+                    <div className="flex flex-1 flex-col gap-4 overflow-auto p-4 pt-0">
+                        {children}
+                    </div>
+                </SidebarInset>
+            </SidebarProvider>
         </div>
     );
 }

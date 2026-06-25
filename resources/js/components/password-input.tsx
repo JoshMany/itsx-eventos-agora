@@ -1,4 +1,5 @@
-import { Button, Input } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Eye, EyeOff } from 'lucide-react';
 import type { ComponentProps, Ref } from 'react';
 import { useState } from 'react';
@@ -20,8 +21,10 @@ export default function PasswordInput({
                 {...props}
             />
             <Button
-                onPress={() => setShowPassword((prev) => !prev)}
-                className="focus:ring-primary data-[state=open]:bg-secondary absolute inset-y-0 right-0 flex items-center rounded-r-md px-3 backdrop-blur-sm hover:text-foreground focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none"
+                onClick={() => setShowPassword((prev) => !prev)}
+                variant="ghost"
+                size="icon"
+                className="absolute inset-y-0 right-0 h-full rounded-l-none"
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
                 {showPassword ? (

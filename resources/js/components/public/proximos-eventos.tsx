@@ -1,4 +1,7 @@
-import { Button, Card, Chip, ProgressBar } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import { Link, router } from '@inertiajs/react';
 import { MapPin, ArrowRight } from 'lucide-react';
 
@@ -40,7 +43,7 @@ function formatDateRange(start: string, end: string): string {
 
 function CardSkeleton() {
     return (
-        <Card className="bg-card flex animate-pulse flex-col gap-4 rounded-xl border border-border/50 p-5">
+        <Card className="flex animate-pulse flex-col gap-4 rounded-xl border border-border/50 bg-card p-5">
             <div className="flex items-start justify-between">
                 <div className="h-5 w-20 rounded-full bg-muted" />
                 <div className="h-4 w-24 rounded bg-muted" />
@@ -74,14 +77,14 @@ export default function ProximosEventos({
                         >
                             Próximos eventos
                         </h2>
-                        <p className="text-muted-foreground mt-2">
+                        <p className="mt-2 text-muted-foreground">
                             Descubre y regístrate en los eventos del ITSX.
                         </p>
                     </div>
                     <Button
                         variant="ghost"
                         size="sm"
-                        onPress={() => router.visit('/eventos')}
+                        onClick={() => router.visit('/eventos')}
                         className="text-itsx-blue dark:text-itsx-gold"
                     >
                         Ver todos
@@ -103,7 +106,7 @@ export default function ProximosEventos({
                         <p className="text-lg font-medium text-foreground">
                             No hay eventos próximos
                         </p>
-                        <p className="text-muted-foreground text-sm">
+                        <p className="text-sm text-muted-foreground">
                             Vuelve más tarde para descubrir nuevas actividades.
                         </p>
                     </div>
@@ -123,12 +126,12 @@ export default function ProximosEventos({
                                     href={`/eventos/${evento.slug}`}
                                     className="block outline-none"
                                 >
-                                    <Card className="bg-card flex flex-col gap-4 rounded-xl border border-border/50 p-5 shadow-sm transition-shadow duration-200 hover:shadow-md">
+                                    <Card className="flex flex-col gap-4 rounded-xl border border-border/50 bg-card p-5 shadow-sm transition-shadow duration-200 hover:shadow-md">
                                         <div className="flex items-start justify-between gap-2">
-                                            <Chip size="sm" variant="tertiary">
+                                            <Badge variant="outline">
                                                 {evento.category}
-                                            </Chip>
-                                            <span className="text-muted-foreground shrink-0 text-xs">
+                                            </Badge>
+                                            <span className="shrink-0 text-xs text-muted-foreground">
                                                 {formatDateRange(
                                                     evento.starts_at,
                                                     evento.ends_at,
@@ -140,7 +143,7 @@ export default function ProximosEventos({
                                             <h3 className="text-lg font-semibold text-foreground">
                                                 {evento.title}
                                             </h3>
-                                            <div className="text-muted-foreground mt-1.5 flex items-center gap-1.5 text-sm">
+                                            <div className="mt-1.5 flex items-center gap-1.5 text-sm text-muted-foreground">
                                                 <MapPin className="h-3.5 w-3.5 shrink-0" />
                                                 <span className="truncate">
                                                     {evento.location}
@@ -160,9 +163,8 @@ export default function ProximosEventos({
                                                 </span>
                                             </div>
                                             {capacidad > 0 && (
-                                                <ProgressBar
+                                                <Progress
                                                     value={progressValue}
-                                                    size="sm"
                                                 />
                                             )}
                                         </div>

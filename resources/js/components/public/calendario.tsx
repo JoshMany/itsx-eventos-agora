@@ -1,6 +1,9 @@
-import { Button, Card, Chip } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Link, router } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
+import React from 'react';
 
 interface UpcomingEvent {
     title: string;
@@ -28,7 +31,7 @@ function formatMonth(iso: string): string {
 
 function RowSkeleton() {
     return (
-        <div className="bg-card flex animate-pulse items-center gap-4 rounded-xl border border-border/50 p-4 sm:gap-6 sm:p-5">
+        <div className="flex animate-pulse items-center gap-4 rounded-xl border border-border/50 bg-card p-4 sm:gap-6 sm:p-5">
             <div className="h-14 w-14 shrink-0 rounded-lg bg-muted sm:h-16 sm:w-16" />
             <div className="min-w-0 flex-1 space-y-2">
                 <div className="h-5 w-3/4 rounded bg-muted" />
@@ -53,14 +56,14 @@ export default function Calendario({ upcomingEvents }: CalendarioProps) {
                         >
                             Calendario
                         </h2>
-                        <p className="text-muted-foreground mt-2">
+                        <p className="mt-2 text-muted-foreground">
                             Fechas clave del calendario institucional.
                         </p>
                     </div>
                     <Button
                         variant="ghost"
                         size="sm"
-                        onPress={() => router.visit('/calendario')}
+                        onClick={() => router.visit('/calendario')}
                         className="text-itsx-blue dark:text-itsx-gold"
                     >
                         Calendario completo
@@ -82,7 +85,7 @@ export default function Calendario({ upcomingEvents }: CalendarioProps) {
                         <p className="text-lg font-medium text-foreground">
                             No hay eventos próximos
                         </p>
-                        <p className="text-muted-foreground text-sm">
+                        <p className="text-sm text-muted-foreground">
                             El calendario se actualizará cuando haya nuevas
                             actividades programadas.
                         </p>
@@ -95,7 +98,7 @@ export default function Calendario({ upcomingEvents }: CalendarioProps) {
                                 href={`/eventos/${item.slug}`}
                                 className="block outline-none"
                             >
-                                <Card className="group bg-card relative flex flex-row items-center gap-4 overflow-hidden rounded-xl border border-border/50 p-4 shadow-sm transition-all duration-250 hover:border-itsx-blue/30 hover:shadow-md sm:gap-6 sm:p-5 dark:hover:border-itsx-gold/30">
+                                <Card className="group relative flex flex-row items-center gap-4 overflow-hidden rounded-xl border border-border/50 bg-card p-4 shadow-sm transition-all duration-250 hover:border-itsx-blue/30 hover:shadow-md sm:gap-6 sm:p-5 dark:hover:border-itsx-gold/30">
                                     {/* Left accent bar */}
                                     <div className="absolute top-0 bottom-0 left-0 w-1 bg-itsx-blue dark:bg-itsx-gold" />
 
@@ -112,12 +115,12 @@ export default function Calendario({ upcomingEvents }: CalendarioProps) {
                                             {item.title}
                                         </p>
                                         <div className="mt-1 flex items-center gap-2">
-                                            <Chip size="sm" variant="tertiary">
+                                            <Badge variant="outline">
                                                 {item.category}
-                                            </Chip>
+                                            </Badge>
                                         </div>
                                     </div>
-                                    <ChevronRight className="text-muted-foreground/30 h-5 w-5 shrink-0 transition-all duration-250 group-hover:translate-x-0.5 group-hover:text-itsx-blue dark:group-hover:text-itsx-gold" />
+                                    <ChevronRight className="h-5 w-5 shrink-0 text-muted-foreground/30 transition-all duration-250 group-hover:translate-x-0.5 group-hover:text-itsx-blue dark:group-hover:text-itsx-gold" />
                                 </Card>
                             </Link>
                         ))}

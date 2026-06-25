@@ -1,4 +1,4 @@
-import { Button } from '@heroui/react';
+import { Button } from '@/components/ui/button';
 import { Form } from '@inertiajs/react';
 import { ShieldCheck } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
@@ -63,9 +63,9 @@ export default function ManageTwoFactor(props: Props) {
                         <Form {...disable.form()}>
                             {({ processing }) => (
                                 <Button
-                                    variant="danger"
+                                    variant="destructive"
                                     type="submit"
-                                    isDisabled={processing}
+                                    disabled={processing}
                                 >
                                     Disable 2FA
                                 </Button>
@@ -100,10 +100,7 @@ export default function ManageTwoFactor(props: Props) {
                                 onSuccess={() => setShowSetupModal(true)}
                             >
                                 {({ processing }) => (
-                                    <Button
-                                        type="submit"
-                                        isDisabled={processing}
-                                    >
+                                    <Button type="submit" disabled={processing}>
                                         Enable 2FA
                                     </Button>
                                 )}

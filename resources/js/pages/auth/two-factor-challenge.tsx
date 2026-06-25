@@ -1,4 +1,5 @@
-import { Button, Input } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
 import InputError from '@/components/input-error';
@@ -144,7 +145,7 @@ export default function TwoFactorChallenge() {
                             <Button
                                 type="submit"
                                 className="w-full"
-                                isDisabled={processing}
+                                disabled={processing}
                             >
                                 Continue
                             </Button>

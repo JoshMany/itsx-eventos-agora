@@ -1,4 +1,4 @@
-import { Card } from '@heroui/react';
+import { Card } from '@/components/ui/card';
 import { router } from '@inertiajs/react';
 import {
     BookOpen,

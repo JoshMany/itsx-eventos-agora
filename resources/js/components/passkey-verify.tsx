@@ -1,4 +1,6 @@
-import { Button, Separator, Spinner } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Spinner } from '@/components/ui/spinner';
 import type { UrlMethodPair } from '@inertiajs/core';
 import { router } from '@inertiajs/react';
 import { usePasskeyVerify } from '@laravel/passkeys/react';
@@ -44,8 +46,8 @@ export default function PasskeyVerify({
                     type="button"
                     variant="outline"
                     className="w-full"
-                    onPress={verify}
-                    isDisabled={isLoading}
+                    onClick={verify}
+                    disabled={isLoading}
                 >
                     {isLoading ? <Spinner /> : <KeyRound className="h-4 w-4" />}
                     {isLoading

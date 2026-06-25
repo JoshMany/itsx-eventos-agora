@@ -1,4 +1,4 @@
-import { Card } from '@heroui/react';
+import { Card } from '@/components/ui/card';
 import { router } from '@inertiajs/react';
 import { Camera } from 'lucide-react';
 
@@ -42,7 +42,7 @@ export default function Galeria() {
                     >
                         Galería
                     </h2>
-                    <p className="text-muted-foreground mt-2">
+                    <p className="mt-2 text-muted-foreground">
                         Momentos destacados de nuestros eventos.
                     </p>
                 </div>
@@ -63,12 +63,12 @@ export default function Galeria() {
                         >
                             <Card className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-border/50 shadow-sm transition-all duration-250 hover:border-itsx-blue/30 hover:shadow-md dark:hover:border-itsx-gold/30">
                                 {/* Top accent bar */}
-                                <div className="bg-itsx-blue/60 absolute top-0 right-0 left-0 z-10 h-1 dark:bg-itsx-gold/60" />
+                                <div className="absolute top-0 right-0 left-0 z-10 h-1 bg-itsx-blue/60 dark:bg-itsx-gold/60" />
 
                                 {/* Placeholder */}
                                 <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-muted to-muted/60">
                                     <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-muted-foreground/10 bg-background/40 shadow-sm backdrop-blur-sm transition-all duration-250 group-hover:scale-110 group-hover:border-itsx-blue/20 dark:group-hover:border-itsx-gold/20">
-                                        <Camera className="text-muted-foreground/40 h-5 w-5 transition-all duration-250 group-hover:text-itsx-blue dark:group-hover:text-itsx-gold" />
+                                        <Camera className="h-5 w-5 text-muted-foreground/40 transition-all duration-250 group-hover:text-itsx-blue dark:group-hover:text-itsx-gold" />
                                     </div>
                                 </div>
 

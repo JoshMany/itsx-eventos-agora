@@ -1,4 +1,6 @@
-import { Button, Card, Input } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { router } from '@inertiajs/react';
 import { Search, ShieldCheck } from 'lucide-react';
 
@@ -27,7 +29,7 @@ export default function ConsultaConstancias() {
                 >
                     Consulta de constancias
                 </h2>
-                <p className="text-muted-foreground mt-3">
+                <p className="mt-3 text-muted-foreground">
                     Verifica la autenticidad de una constancia ingresando su
                     folio o código de validación.
                 </p>
@@ -36,7 +38,7 @@ export default function ConsultaConstancias() {
                     {benefits.map((text) => (
                         <div
                             key={text}
-                            className="text-muted-foreground flex items-center gap-2 text-sm"
+                            className="flex items-center gap-2 text-sm text-muted-foreground"
                         >
                             <span className="h-1.5 w-1.5 rounded-full bg-itsx-blue dark:bg-itsx-gold" />
                             {text}
@@ -44,7 +46,7 @@ export default function ConsultaConstancias() {
                     ))}
                 </div>
 
-                <Card className="group bg-card relative mx-auto mt-8 max-w-md overflow-hidden rounded-xl border border-border/50 p-6 shadow-sm transition-all duration-250 hover:border-itsx-blue/30 hover:shadow-md dark:hover:border-itsx-gold/30">
+                <Card className="group relative mx-auto mt-8 max-w-md overflow-hidden rounded-xl border border-border/50 bg-card p-6 shadow-sm transition-all duration-250 hover:border-itsx-blue/30 hover:shadow-md dark:hover:border-itsx-gold/30">
                     {/* Top accent bar */}
                     <div className="absolute top-0 right-0 left-0 h-1 bg-itsx-blue dark:bg-itsx-gold" />
 
@@ -55,7 +57,7 @@ export default function ConsultaConstancias() {
                             aria-label="Folio de constancia"
                         />
                         <Button
-                            onPress={() => router.visit('/constancias')}
+                            onClick={() => router.visit('/constancias')}
                             className="bg-itsx-blue text-white shadow-sm transition-all duration-250 hover:bg-itsx-blue/90 hover:shadow-md active:scale-[0.97]"
                         >
                             <Search

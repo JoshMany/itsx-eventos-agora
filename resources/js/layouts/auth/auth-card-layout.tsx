@@ -1,4 +1,10 @@
-import { Card } from '@heroui/react';
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardContent,
+} from '@/components/ui/card';
 import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
 import AppLogoIcon from '@/components/app-logo-icon';
@@ -27,13 +33,13 @@ export default function AuthCardLayout({
 
                 <div className="flex flex-col gap-6">
                     <Card className="rounded-xl">
-                        <Card.Header className="px-10 pt-8 pb-0 text-center">
-                            <Card.Title className="text-xl">{title}</Card.Title>
-                            <Card.Description>{description}</Card.Description>
-                        </Card.Header>
-                        <Card.Content className="px-10 py-8">
+                        <CardHeader className="px-10 pt-8 pb-0 text-center">
+                            <CardTitle className="text-xl">{title}</CardTitle>
+                            <CardDescription>{description}</CardDescription>
+                        </CardHeader>
+                        <CardContent className="px-10 py-8">
                             {children}
-                        </Card.Content>
+                        </CardContent>
                     </Card>
                 </div>
             </div>

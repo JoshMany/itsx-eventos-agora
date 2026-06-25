@@ -1,4 +1,4 @@
-import { Separator } from '@heroui/react';
+import { Separator } from '@/components/ui/separator';
 import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
 import Heading from '@/components/heading';

@@ -1,4 +1,4 @@
-import { Card } from '@heroui/react';
+import { Card } from '@/components/ui/card';
 import { router } from '@inertiajs/react';
 import { BookOpen, GraduationCap, ShieldCheck } from 'lucide-react';
 
@@ -37,7 +37,7 @@ export default function Caracteristicas() {
                     >
                         Todo lo que necesitas en un solo lugar.
                     </h2>
-                    <p className="text-muted-foreground mx-auto mt-3 max-w-lg text-base leading-relaxed">
+                    <p className="mx-auto mt-3 max-w-lg text-base leading-relaxed text-muted-foreground">
                         Desde descubrir hasta certificar tu participación, ÁGORA
                         te acompaña en cada etapa de tu vida universitaria.
                     </p>
@@ -59,7 +59,7 @@ export default function Caracteristicas() {
                                 }}
                                 className="group animate-on-scroll"
                             >
-                                <Card className="bg-card relative flex h-full flex-col gap-5 overflow-hidden rounded-2xl border border-border/50 p-6 shadow-sm transition-all duration-250 hover:border-itsx-blue/30 hover:shadow-md sm:p-8 dark:hover:border-itsx-gold/30">
+                                <Card className="relative flex h-full flex-col gap-5 overflow-hidden rounded-2xl border border-border/50 bg-card p-6 shadow-sm transition-all duration-250 hover:border-itsx-blue/30 hover:shadow-md sm:p-8 dark:hover:border-itsx-gold/30">
                                     {/* Top accent bar */}
                                     <div className="absolute top-0 right-0 left-0 h-1 bg-itsx-blue dark:bg-itsx-gold" />
 
@@ -73,7 +73,7 @@ export default function Caracteristicas() {
                                         <h3 className="text-xl font-bold text-foreground">
                                             {titulo}
                                         </h3>
-                                        <p className="text-muted-foreground text-sm leading-relaxed">
+                                        <p className="text-sm leading-relaxed text-muted-foreground">
                                             {descripcion}
                                         </p>
                                     </div>

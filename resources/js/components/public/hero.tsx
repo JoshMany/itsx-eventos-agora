@@ -1,4 +1,4 @@
-import { Button } from '@heroui/react';
+import { Button } from '@/components/ui/button';
 import { Link, router } from '@inertiajs/react';
 import {
     ArrowRight,
@@ -119,7 +119,7 @@ function StatsContent({ stats }: { stats: HeroStats }) {
                             {value}
                             {suffix}
                         </p>
-                        <p className="text-muted-foreground mt-0.5 text-sm">
+                        <p className="mt-0.5 text-sm text-muted-foreground">
                             {label}
                         </p>
                     </div>
@@ -145,7 +145,7 @@ export default function Hero({ stats }: HeroProps) {
                         El punto de encuentro para la vida universitaria.
                     </h1>
 
-                    <p className="text-muted-foreground max-w-lg text-lg leading-relaxed">
+                    <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">
                         Descubre eventos académicos, actividades culturales,
                         talleres, conferencias y experiencias que impulsan tu
                         formación profesional dentro y fuera del aula.
@@ -155,7 +155,7 @@ export default function Hero({ stats }: HeroProps) {
                     <div className="flex flex-wrap gap-3">
                         <Button
                             size="lg"
-                            onPress={() => router.visit('/eventos')}
+                            onClick={() => router.visit('/eventos')}
                             className="bg-itsx-blue hover:bg-itsx-blue/90"
                         >
                             Explorar eventos
@@ -164,7 +164,7 @@ export default function Hero({ stats }: HeroProps) {
                         <Button
                             variant="outline"
                             size="lg"
-                            onPress={() => router.visit('/constancias')}
+                            onClick={() => router.visit('/constancias')}
                             className="border-2 border-blue-950 text-itsx-blue hover:bg-itsx-blue hover:text-white dark:text-itsx-gold dark:hover:bg-itsx-gold dark:hover:text-itsx-blue"
                         >
                             Verificar constancia
@@ -186,7 +186,7 @@ export default function Hero({ stats }: HeroProps) {
                         ].map(({ icon: Icon, label }) => (
                             <div
                                 key={label}
-                                className="text-muted-foreground flex items-center gap-2.5 text-sm"
+                                className="flex items-center gap-2.5 text-sm text-muted-foreground"
                             >
                                 <Icon
                                     className="h-4 w-4 text-itsx-blue dark:text-itsx-gold"
@@ -208,7 +208,7 @@ export default function Hero({ stats }: HeroProps) {
                 {/* RIGHT — Visual preview (decorative) */}
                 <div aria-hidden="true" className="relative hidden lg:block">
                     {/* Main card */}
-                    <div className="bg-card relative overflow-hidden rounded-2xl border border-border/60 p-6 shadow-lg shadow-black/5 dark:shadow-black/20">
+                    <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-card p-6 shadow-lg shadow-black/5 dark:shadow-black/20">
                         {/* Card header */}
                         <div className="mb-5 flex items-center gap-2.5">
                             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-itsx-blue text-white">
@@ -220,7 +220,7 @@ export default function Hero({ stats }: HeroProps) {
                                         ? 'Próximo evento'
                                         : 'Próximos eventos'}
                                 </p>
-                                <p className="text-muted-foreground text-md">
+                                <p className="text-md text-muted-foreground">
                                     {stats?.nextEvent?.title ??
                                         'Semana Académica ITSX'}
                                 </p>
@@ -272,13 +272,13 @@ export default function Hero({ stats }: HeroProps) {
                                         <p className="truncate text-sm font-semibold text-foreground">
                                             {event.title}
                                         </p>
-                                        <p className="text-muted-foreground text-xs">
+                                        <p className="text-xs text-muted-foreground">
                                             {formatShortDate(event.starts_at)}
                                             {' · '}
                                             {spotsLabel(event)}
                                         </p>
                                     </div>
-                                    <ChevronRight className="text-muted-foreground/30 h-4 w-4 shrink-0" />
+                                    <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground/30" />
                                 </Link>
                             ))}
                         </div>
@@ -286,13 +286,13 @@ export default function Hero({ stats }: HeroProps) {
 
                     {/* Floating stats card */}
                     <div className="absolute -bottom-20 -left-16 hidden rounded-xl border border-border/50 bg-background px-5 py-3.5 shadow-lg shadow-black/40 xl:block">
-                        <p className="text-muted-foreground text-xs font-medium">
+                        <p className="text-xs font-medium text-muted-foreground">
                             Asistencia promedio
                         </p>
                         <p className="mt-0.5 text-2xl font-bold text-itsx-blue dark:text-itsx-gold">
                             {stats?.averageAttendance ?? 89}%
                         </p>
-                        <p className="text-muted-foreground text-[10px]">
+                        <p className="text-[10px] text-muted-foreground">
                             Este semestre
                         </p>
                     </div>

@@ -1,4 +1,4 @@
-import { toast } from '@heroui/react';
+import { toast } from 'sonner';
 import { router } from '@inertiajs/react';
 import { useEffect } from 'react';
 import type { FlashToast } from '@/types/ui';
@@ -7,7 +7,7 @@ const typeMap: Record<FlashToast['type'], (message: string) => void> = {
     success: toast.success,
     info: toast.info,
     warning: toast.warning,
-    error: toast.danger,
+    error: toast.error,
 };
 
 export function useFlashToast(): void {

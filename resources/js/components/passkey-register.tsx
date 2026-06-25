@@ -1,4 +1,6 @@
-import { Button, Input, Label } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { usePasskeyRegister } from '@laravel/passkeys/react';
 import { useState } from 'react';
 import InputError from '@/components/input-error';
@@ -75,7 +77,7 @@ export default function PasskeyRegistration({ onSuccess }: Props) {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g., MacBook Pro, iPhone"
-                    className="mt-1 block w-full border-foreground/20"
+                    className="mt-1 block w-full"
                     autoFocus
                 />
                 <p className="text-xs text-muted-foreground">
@@ -86,10 +88,10 @@ export default function PasskeyRegistration({ onSuccess }: Props) {
             {error && <InputError message={error} />}
 
             <div className="flex gap-2">
-                <Button type="submit" isDisabled={isLoading || !name.trim()}>
+                <Button type="submit" disabled={isLoading || !name.trim()}>
                     {isLoading ? 'Registering...' : 'Register passkey'}
                 </Button>
-                <Button type="button" variant="ghost" onPress={handleCancel}>
+                <Button type="button" variant="ghost" onClick={handleCancel}>
                     Cancel
                 </Button>
             </div>

@@ -1,4 +1,6 @@
-import { Button, Input, Label } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Form, Head, usePage } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
@@ -110,7 +112,7 @@ export default function Profile({
 
                             <div className="flex items-center gap-4">
                                 <Button
-                                    isDisabled={processing}
+                                    disabled={processing}
                                     data-test="update-profile-button"
                                 >
                                     Save

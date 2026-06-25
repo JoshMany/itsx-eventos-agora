@@ -1,4 +1,8 @@
-import { Dropdown, Label } from '@heroui/react';
+import {
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+} from '@/components/ui/dropdown-menu';
 import { router } from '@inertiajs/react';
 import { LogOut, Settings } from 'lucide-react';
 import { UserInfo } from '@/components/user-info';
@@ -22,35 +26,28 @@ export function UserMenuContent({ user }: Props) {
 
     return (
         <>
-            <Dropdown.Section>
+            <DropdownMenuGroup>
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <UserInfo user={user} showEmail={true} />
                 </div>
-            </Dropdown.Section>
-            <Dropdown.Section>
-                <Dropdown.Item
-                    key="settings"
-                    textValue="Settings"
-                    onAction={() => {
+            </DropdownMenuGroup>
+            <DropdownMenuGroup>
+                <DropdownMenuItem
+                    onClick={() => {
                         cleanup();
                         router.visit(edit().url);
                     }}
                 >
                     <Settings className="mr-2" />
-                    <Label>Settings</Label>
-                </Dropdown.Item>
-            </Dropdown.Section>
-            <Dropdown.Section>
-                <Dropdown.Item
-                    key="logout"
-                    textValue="Log out"
-                    onAction={handleLogout}
-                    variant="danger"
-                >
+                    <DropdownMenuLabel>Settings</DropdownMenuLabel>
+                </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuGroup>
+                <DropdownMenuItem onClick={handleLogout} variant="destructive">
                     <LogOut className="mr-2" />
-                    <Label>Log out</Label>
-                </Dropdown.Item>
-            </Dropdown.Section>
+                    <DropdownMenuLabel>Log out</DropdownMenuLabel>
+                </DropdownMenuItem>
+            </DropdownMenuGroup>
         </>
     );
 }

@@ -1,4 +1,6 @@
-import { Button, Input, Spinner } from '@heroui/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
 import { Head, useForm } from '@inertiajs/react';
 import { store as registerRoute } from '@/actions/App/Http/Controllers/Participants/ParticipantRegistrationController';
 import InputError from '@/components/input-error';
@@ -89,8 +91,11 @@ export default function RegisterForm({ eventId, eventName }: Props) {
                                     <Input
                                         type="text"
                                         value={data.first_name}
-                                        onValueChange={(v) =>
-                                            setData('first_name', v)
+                                        onChange={(e) =>
+                                            setData(
+                                                'first_name',
+                                                e.target.value,
+                                            )
                                         }
                                         placeholder="Nombre"
                                         autoComplete="given-name"
@@ -105,8 +110,8 @@ export default function RegisterForm({ eventId, eventName }: Props) {
                                     <Input
                                         type="text"
                                         value={data.last_name}
-                                        onValueChange={(v) =>
-                                            setData('last_name', v)
+                                        onChange={(e) =>
+                                            setData('last_name', e.target.value)
                                         }
                                         placeholder="Apellido"
                                         autoComplete="family-name"
@@ -124,7 +129,9 @@ export default function RegisterForm({ eventId, eventName }: Props) {
                                 <Input
                                     type="email"
                                     value={data.email}
-                                    onValueChange={(v) => setData('email', v)}
+                                    onChange={(e) =>
+                                        setData('email', e.target.value)
+                                    }
                                     placeholder="tu@correo.com"
                                     autoComplete="email"
                                 />
@@ -139,7 +146,9 @@ export default function RegisterForm({ eventId, eventName }: Props) {
                                 <Input
                                     type="tel"
                                     value={data.phone}
-                                    onValueChange={(v) => setData('phone', v)}
+                                    onChange={(e) =>
+                                        setData('phone', e.target.value)
+                                    }
                                     placeholder="Opcional"
                                     autoComplete="tel"
                                 />
@@ -156,8 +165,11 @@ export default function RegisterForm({ eventId, eventName }: Props) {
                                     <Input
                                         type="text"
                                         value={data.institution}
-                                        onValueChange={(v) =>
-                                            setData('institution', v)
+                                        onChange={(e) =>
+                                            setData(
+                                                'institution',
+                                                e.target.value,
+                                            )
                                         }
                                         placeholder="Nombre de tu institución u organización"
                                     />
@@ -174,8 +186,11 @@ export default function RegisterForm({ eventId, eventName }: Props) {
                                     <Input
                                         type="text"
                                         value={data.student_number}
-                                        onValueChange={(v) =>
-                                            setData('student_number', v)
+                                        onChange={(e) =>
+                                            setData(
+                                                'student_number',
+                                                e.target.value,
+                                            )
                                         }
                                         placeholder="Tu número de control"
                                     />
@@ -188,12 +203,11 @@ export default function RegisterForm({ eventId, eventName }: Props) {
 
                         <Button
                             type="submit"
-                            color="primary"
                             className="w-full"
-                            isDisabled={processing}
+                            disabled={processing}
                             size="lg"
                         >
-                            {processing && <Spinner size="sm" />}
+                            {processing && <Spinner />}
                             Registrarme
                         </Button>
 
