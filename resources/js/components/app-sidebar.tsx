@@ -11,7 +11,7 @@ import {
 
 import * as React from 'react';
 
-import AppLogo from '@/components/app-logo';
+import AppLogo from '@/components/AppLogo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {

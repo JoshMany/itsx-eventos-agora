@@ -1,12 +1,12 @@
-import Calendario from '@/components/public/calendario';
-import Caracteristicas from '@/components/public/caracteristicas';
-import ConsultaConstancias from '@/components/public/consulta-constancias';
-import Footer from '@/components/public/footer';
-import Galeria from '@/components/public/galeria';
-import Hero from '@/components/public/hero';
-import NavBar from '@/components/public/navbar';
-import ProximosEventos from '@/components/public/proximos-eventos';
-import TickerBanner from '@/components/public/ticker-banner';
+import Calendario from '@/components/landing/calendario';
+import Caracteristicas from '@/components/landing/caracteristicas';
+import ConsultaConstancias from '@/components/landing/consulta-constancias';
+import Footer from '@/components/landing/footer';
+import Galeria from '@/components/landing/galeria';
+import Hero from '@/components/landing/hero';
+import NavBar from '@/components/landing/navbar';
+import ProximosEventos from '@/components/landing/proximos-eventos';
+import TickerBanner from '@/components/landing/ticker-banner';
 
 interface WelcomeProps {
     stats: {

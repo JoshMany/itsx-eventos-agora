@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
 import { useState } from 'react';
-import AppLogo from '@/components/app-logo';
+import AppLogo from '@/components/AppLogo';
 import AppLogoIcon from '@/components/app-logo-icon';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { UserMenuContent } from '@/components/user-menu-content';
