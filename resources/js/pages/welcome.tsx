@@ -3,8 +3,8 @@ import Caracteristicas from '@/components/landing/caracteristicas';
 import ConsultaConstancias from '@/components/landing/consulta-constancias';
 import Footer from '@/components/landing/footer';
 import Galeria from '@/components/landing/galeria';
-import Hero from '@/components/landing/hero';
-import NavBar from '@/components/landing/navbar';
+import Hero from '@/components/landing/Hero';
+import NavBar from '@/components/landing/NavBar';
 import ProximosEventos from '@/components/landing/proximos-eventos';
 import TickerBanner from '@/components/landing/ticker-banner';
 

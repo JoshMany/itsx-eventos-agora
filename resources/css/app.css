@@ -48,6 +48,13 @@
     --foreground: #0b1120;
     --muted: #a89978;
     --muted-foreground: #5c5342;
+
+    /* Cards & Borders */
+    --card: #faf6ef;
+    --card-foreground: #0b1120;
+    --border: #e5ddd0;
+    --primary: #001e38;
+    --primary-foreground: #ffffff;
 }
 
 /* ==================================================================
@@ -69,6 +76,13 @@
     --foreground: #f8fafc;
     --muted: #1a2332;
     --muted-foreground: #94a3b8;
+
+    /* Cards & Borders */
+    --card: #131c2d;
+    --card-foreground: #f8fafc;
+    --border: #1e293b;
+    --primary: #001e38;
+    --primary-foreground: #ffffff;
 }
 
 @layer base {

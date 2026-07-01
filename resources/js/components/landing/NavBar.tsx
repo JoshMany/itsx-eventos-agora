@@ -54,7 +54,7 @@ export default function NavBar() {
                                 <Link
                                     key={href}
                                     href={href}
-                                    className="group text-md relative font-bold"
+                                    className="group text-md relative"
                                     onClick={(e) => {
                                         if (currentUrl === href) {
                                             e.preventDefault();
@@ -68,14 +68,14 @@ export default function NavBar() {
                         </nav>
                     </div>
 
-                    <div className="hidden items-center gap-2 md:flex">
+                    <div className="hidden items-center gap-2 lg:flex">
                         <Button
                             onClick={() =>
                                 updateAppearance(isDark ? 'light' : 'dark')
                             }
                         >
                             <motion.span
-                                className="relative flex h-5 w-5 items-center justify-center"
+                                className="relative flex h-8 w-8 items-center justify-center"
                                 whileHover={{ rotate: 30, scale: 1.15 }}
                                 transition={{
                                     type: 'spring',
@@ -84,11 +84,11 @@ export default function NavBar() {
                                 }}
                             >
                                 <Sun
-                                    size={18}
+                                    size={28}
                                     className={`absolute transition-all duration-300 ${isDark ? 'scale-0 rotate-90 opacity-0' : 'scale-100 rotate-0 opacity-100'}`}
                                 />
                                 <Moon
-                                    size={18}
+                                    size={28}
                                     className={`absolute transition-all duration-300 ${isDark ? 'scale-100 rotate-0 opacity-100' : 'scale-0 -rotate-90 opacity-0'}`}
                                 />
                             </motion.span>
@@ -98,7 +98,7 @@ export default function NavBar() {
                             <>
                                 <Button
                                     variant="ghost"
-                                    className={'text-md font-bold'}
+                                    className={'text-md'}
                                     onClick={() => router.visit(login().url)}
                                 >
                                     Iniciar sesión
@@ -106,23 +106,20 @@ export default function NavBar() {
 
                                 <Button
                                     variant="outline"
-                                    className={'text-md font-bold'}
+                                    className={'text-md'}
                                     onClick={() => router.visit(register().url)}
                                 >
                                     Registrate
                                 </Button>
                             </>
                         ) : (
-                            <Link
-                                href="/dashboard"
-                                className="text-sm font-medium text-foreground/80 hover:text-foreground"
-                            >
+                            <Link href="/dashboard" className="text-md">
                                 Mi cuenta
                             </Link>
                         )}
                     </div>
 
-                    <div className="flex items-center gap-2 md:hidden">
+                    <div className="flex items-center gap-2 lg:hidden">
                         <Button
                             size="icon"
                             variant="ghost"
@@ -131,7 +128,7 @@ export default function NavBar() {
                             }
                         >
                             <motion.span
-                                className="relative flex h-5 w-5 items-center justify-center"
+                                className="relative flex h-8 w-8 items-center justify-center"
                                 whileHover={{ rotate: 30, scale: 1.15 }}
                                 transition={{
                                     type: 'spring',
@@ -140,11 +137,11 @@ export default function NavBar() {
                                 }}
                             >
                                 <Sun
-                                    size={18}
+                                    size={28}
                                     className={`absolute transition-all duration-300 ${isDark ? 'scale-0 rotate-90 opacity-0' : 'scale-100 rotate-0 opacity-100'}`}
                                 />
                                 <Moon
-                                    size={18}
+                                    size={28}
                                     className={`absolute transition-all duration-300 ${isDark ? 'scale-100 rotate-0 opacity-100' : 'scale-0 -rotate-90 opacity-0'}`}
                                 />
                             </motion.span>
