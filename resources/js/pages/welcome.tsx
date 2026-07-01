@@ -6,7 +6,7 @@ import Galeria from '@/components/landing/galeria';
 import Hero from '@/components/landing/Hero';
 import NavBar from '@/components/landing/NavBar';
 import ProximosEventos from '@/components/landing/proximos-eventos';
-import TickerBanner from '@/components/landing/ticker-banner';
+import Marquee from '@/components/landing/Marquee';
 
 interface WelcomeProps {
     stats: {
@@ -34,7 +34,7 @@ export default function Welcome({ stats }: WelcomeProps) {
         <div className="min-h-screen bg-background">
             <NavBar />
             <Hero stats={stats} />
-            <TickerBanner stats={stats} />
+            <Marquee stats={stats} />
             <ProximosEventos upcomingEvents={stats?.upcomingEvents} />
             <Caracteristicas />
             <Calendario upcomingEvents={stats?.upcomingEvents} />
